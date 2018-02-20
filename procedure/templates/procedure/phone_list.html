@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/revisit_call_list.css" %}" >
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+</head>
+<body>
+<div id="content">
+    <table border="5" class= "summary">
+        <tr>
+            <th></th>
+            <th> 전화 대상자</th>
+            <th> 통화 된 사람</th>
+            <th> 재방문 한 사람</th>
+        </tr>
+        <tr>
+            <td> 명수 (%)</td>
+            <td> {{total_number}}</td>
+            <td> {{called_number}} ({{called_fraction}})</td>
+            <td> {{visited_number}} ({{visited_fraction}})</td>
+        </tr>
+    </table>
+
+    <h2> 이번 달 검사 받으러 올 환자 <font color="red">{{total_number}}</font>명 중, 전화할 사람 <font color="red">{{will_call_number}}</font>명 남았습니다.</h2>
+        <table class="call_list">
+        <tr>
+        <th class="col-name"> 이름</th>
+        <th class="col-no"> No.</th>
+        <th class ="col-birth"> 나이(생일)</th>
+        <th class="col-phone"> 전화</th>
+        <th class="col-date"> 날짜</th>
+        <th class="col-type"> 검사</th>
+        <th class="col-Dr"> Dr.</th>
+        <th class="col-Dx"> 진단명</th>
+        <th class="col-Bx"> Bx </th>
+        </tr>
+    {% for id, info in will_call_list.items %}
+    <tr>
+        <td><a href="{% url 'procedure:re_visit_patient_info' id %}" onclick="window.open(this.href,'', 'width=600, height=700');return(false);"><font color="blue">{{ info.name }}</font></a>({{info.sex}})</td>
+        <td>{{ info.hospital_no}}</td>
+        <td>{{ info.age}}({{ info.birth |  date:"y, m.d"}})</td>
+        <td>{{ info.phone }}</td>
+        <td>{{ info.date |  date:"y, m.d" }}</td>
+        <td>{{ info.endo_type }}</td>
+        <td>{{ info.doc}}</td>
+        <td align="left" class="short-form" title = "{{info.Dx}}">{{ info.Dx }}</td>
+        <td align="left" class="short-form" title = "{{info.Bx_result}}">{{ info.Bx_result }}</td>
+        </tr>
+    {% endfor %}
+        </table>
+
+    <br><br><br>
+    <h2> <font color="red">{{called_number}}</font>명과 통화되었습니다. 아래는 통화 결과 입니다.</h2>
+    <table class="called_list">
+        <tr>
+        <th class="called-name"> 이름</th>
+        <th class="called-no"> No.</th>
+        <th class="called-birth"> 나이(생일)</th>
+        <th class="called-phone"> 전화</th>
+        <th class="called-date"> 검사 날짜</th>
+        <th class="called-type"> 검사</th>
+        <th class="called-Dr"> Dr.</th>
+        <th class="called-Dx"> 진단명</th>
+        <th class="called-Bx"> Bx </th>
+        <th class="called-dialog"> 통화내용</th>
+        </tr>
+    {% for id, info in called_list.items %}
+    <tr>
+        <td><a href="{% url 'procedure:re_visit_patient_info' id %}"><font color="blue">{{ info.name }}</font></a>({{info.sex}})</td>
+        <td>{{ info.hospital_no}}</td>
+        <td>{{ info.age}}({{ info.birth |  date:"y, m.d"}})</td>
+        <td>{{ info.phone }}</td>
+        <td>{{ info.date |  date:"y, m.d" }}</td>
+        <td>{{ info.endo_type }}</td>
+        <td>{{ info.doc}}</td>
+        <td align="left" class="short-form" title = "{{info.Dx}}">{{ info.Dx }}</td>
+        <td align="left" class="short-form" title = "{{info.Bx_result}}">{{ info.Bx_result }}</td>
+        <td align="left" class="short-form" title = "{{info.dialog}}"><font color="red"><b>{{ info.dialog }}</b></font></td>
+    </tr>
+    {% endfor %}
+    </table>
+    <br><br><br>
+    <h2> 통화 후 내원한 환자 <font color="red">{{visited_number}}</font>명 입니다.</h2>
+    <table class="visited_list">
+        <tr>
+        <th class="called-name"> 이름</th>
+        <th class="called-no"> No.</th>
+        <th class="called-birth"> 나이(생일)</th>
+        <th class="called-phone"> 전화</th>
+        <th class="called-date"> 검사 날짜</th>
+        <th class="called-type"> 검사</th>
+        <th class="called-Dr"> Dr.</th>
+        <th class="called-Dx"> 진단명</th>
+        <th class="called-Bx"> Bx </th>
+        <th class="called-dialog"> 통화내용</th>
+        </tr>
+    {% for id, info in visited_list.items %}
+    <tr>
+        <td><a href="{% url 'procedure:re_visit_patient_info' id %}"><font color="blue">{{ info.name }}</font></a>({{ info.sex }})</td>
+        <td>{{ info.hospital_no}}</td>
+        <td>{{ info.age}}({{ info.birth |  date:"y, m.d"}})</td>
+        <td>{{ info.phone }}</td>
+        <td>{{ info.date |  date:"y, m.d" }}</td>
+        <td>{{ info.endo_type }}</td>
+        <td>{{ info.doc}}</td>
+        <td align="left" class="short-form" title = "{{info.Dx}}">{{ info.Dx }}</td>
+        <td align="left" class="short-form" title = "{{info.Bx_result}}">{{ info.Bx_result }}</td>
+        <td align="left" class="short-form" title = "{{info.dialog}}"><font color="red"><b>{{ info.dialog }}</b></font></td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("table.call_list tr:even").css("background-color", "#ECF8E0");
+        $("table.call_list tr:odd").css("background-color", "#E3F6CE");
+
+        $("table.called_list tr:even").css("background-color", "#CED8F6");
+        $("table.called_list tr:odd").css("background-color", "#A9D0F5");
+
+        $("table.visited_list tr:even").css("background-color", "#CED8F6");
+        $("table.visited_list tr:odd").css("background-color", "#A9D0F5");
+    });
+</script>

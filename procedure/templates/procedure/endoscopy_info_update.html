@@ -1,0 +1,71 @@
+{% block title %}검사 정보 수정해주세요 {% endblock %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type = "text/css" href="{% static 'css/patient_info.css' %}">
+
+
+{% block content %}
+<div id="content">
+
+<form action="." method="post"> {% csrf_token %}
+    {% if form.errors %}
+    <p class="errornote"> 입력이 잘못 되었습니다. 다시 입력해주세요!~</p>
+    {% endif %}
+
+    <fieldset class="aligned">
+        <div class="form-row" id = "date">
+            {{form.date.label_tag}}{{form.date}}
+        </div>
+        <div class="form-row">
+            {{form.type.label_tag}}{{form.type}}
+        </div>
+        <div class="form-row">
+            {{form.doc.label_tag}}{{form.doc}}
+        </div>
+        <div class="form-row">
+            {{form.source.label_tag}}{{form.source}}
+        </div>
+        <div class="form-row">
+            {{form.place.label_tag}}{{form.place}}
+        </div>
+        <div class="form-row">
+            {{form.Dx.label_tag}}{{form.Dx}}
+        </div>
+        <div class="form-row">
+            {{form.procedure.label_tag}}{{form.procedure}}
+        </div>
+        <div class="form-row">
+            {{form.Bx_result.label_tag}}{{form.Bx_result}}
+        </div>
+        <div class="form-row">
+            {{form.Bx_result_call.label_tag}}{{form.Bx_result_call}}
+        </div>
+        <div class="form-row">
+            {{form.followup_period.label_tag}}{{form.followup_period}}
+        </div>
+        <div class="form-row">
+            {{form.re_visit_call.label_tag}}{{form.re_visit_call}}
+        </div>
+        <div class="form-row">
+            {{form.re_visit.label_tag}}{{form.re_visit}}
+        </div>
+        <div class="form-row">
+            {{form.re_visit_date.label_tag}}{{form.re_visit_date}}
+        </div>
+    </fieldset>
+    <div class="submit-row">
+        <input type="submit" value="저장"/>
+    </div>
+    <script type="text/javascript">document.getElementById('date').focus();</script>
+
+    </form>
+</div>
+{% endblock %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_type").css({
+            "list-style-type": "none",
+            "display": "inline-block"
+            });
+</script>

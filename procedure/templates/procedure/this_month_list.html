@@ -1,0 +1,100 @@
+{%  extends "base.html" %}
+
+{% block title %}환자 검색 {% endblock %}
+
+{% block content %}
+<div id="content">
+    <h1> 이번달 통계</h1>
+    <table>
+        <tr>
+            <th> 검사 </th>
+            <th> 상부내시경 </th>
+            <th> 대장내시경</th>
+            <th> 직장내시경 </th>
+        </tr>
+        <tr>
+            <td> 건진</td>
+            <td> {{g_egd}}개</td>
+            <td> {{g_colon}}개</td>
+            <td rowspan="2"> {{sig}}개</td>
+        </tr>
+        <tr>
+            <td> 진료 </td>
+            <td> {{j_egd}}개</td>
+            <td> {{j_colon}}개</td>
+        </tr>
+        <tr>
+            <td> Total</td>
+            <td>{{total_egd}}개</td>
+            <td> {{total_colon}}개</td>
+            <td> {{sig}}개 </td>
+        </tr>
+    </table>
+     <br><br>
+    <h1> 용종 & 선종 발견율</h1>
+    <table>
+        <tr>
+            <th> </th>
+            <th> 이영재</th>
+            <th> 김신일</th>
+            <th> 병원 전체</th>
+        </tr>
+        <tr>
+            <td> <strong>대장내시경</strong></td>
+            <td> {{first_colon}}개</td>
+            <td> {{second_colon}}개</td>
+            <td> {{total_colon}} 개</td>
+        </tr>
+        <tr>
+            <td> <strong>용종발견율</strong></td>
+            <td> {{first_polyp_rate}}%</td>
+            <td> {{second_polyp_rate}}%</td>
+            <td> {{total_polyp_rate}}%</td>
+        </tr>
+        <tr>
+            <td> <strong>선종발견율</strong></td>
+            <td> {{first_adr}}%</td>
+            <td> {{second_adr}}%</td>
+            <td> {{total_adenoma_rate}}%</td>
+        </tr>
+    </table>
+    <br><br>
+    <h1> 이번달 검사 받은 환자 명단 <font color="red">(총 {{object_list | length }}명)</font></h1>
+
+    {%  if object_list %}
+        <table>
+        <tr>
+        <th> 이름</th>
+        <th> 성별</th>
+        <th> No.</th>
+        <th> 생일</th>
+        <th> phone</th>
+        <th> 검사 날짜</th>
+        <th> 검사종류</th>
+        <th> Dr.</th>
+        <th> 건진/진료</th>
+        <th> 검사 경로</th>
+        <th> 진단명</th>
+        <th> 시술</th>
+        </tr>
+
+    {%  for list in object_list %}
+        <tr>
+        <td><a href="{% url 'procedure:month_update' list.id %}"><font color="blue">{{ list.patient_name }}</font></a></td>
+        <td>{{ list.patient_sex }}</td>
+        <td>{{ list.hospital_no}}</td>
+        <td>{{ list.patient_birth |  date:"y, m.d"}}</td>
+        <td>{{ list.patient_phone}}</td>
+        <td>{{ list.exam_date |  date:"y, m.d" }}</td>
+        <td>{{ list.exam_type }}</td>
+        <td>{{ list.exam_doc}}</td>
+        <td>{{ list.exam_class }}</td>
+        <td>{{ list.exam_place }}</td>
+        <td>{{ list.exam_Dx }}</td>
+        <td>{{ list.exam_procedure }}</td>
+        </tr>
+    {% endfor %}
+        </table>
+    {%  endif %}
+</div>
+{% endblock %}

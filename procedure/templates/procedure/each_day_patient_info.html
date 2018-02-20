@@ -1,0 +1,67 @@
+<Title>
+    {{name}}
+</Title>
+
+{% load static %}
+<link rel="stylesheet" type = "text/css" href="{% static 'css/patient_info.css' %}">
+
+
+{% block content %}
+<div id="content">
+<h3>환자정보</h3>
+    <table  border="1" >
+        <tr align="center">
+            <th>이름</th>
+            <td><a href="{% url 'procedure:patient_info_update' patient_id %}"><font color="blue">{{name}}</font></a></td>
+            <th>등록번호</th>
+            <td>{{hospital_no}}</td>
+            <th>성별</th>
+            <td>{{sex}}</td>
+        </tr>
+        <tr align="center">
+            <th>나이</th>
+            <td>{{age}}</td>
+            <th>생일</th>
+            <td colspan="3">{{birth}}</td>
+        </tr>
+        <tr>
+            <th align="center">전화</th>
+            <td colspan="5">{{phone}}</td>
+        </tr>
+        <tr>
+            <th align="center">주소</th>
+            <td colspan="5">{{address}}</td>
+        </tr>
+    </table>
+<h3>검사 목록</h3>
+{% for key, value in endo_context.items %}
+    <table border="1" >
+        <tr>
+            <th id = 'date-title'>날짜</th>
+            <td colspan="7" id="date"><a href="{% url 'procedure:endoscopy_info_update' value.id %}"><font color="blue">{{key}}</font></a></td>
+        </tr>
+        <tr>
+            <th>검사</th>
+            <td>{{value.type}}</td>
+            <th>의사</th>
+            <td>{{value.doc}}</td>
+            <th>검진/진료</th>
+            <td>{{value.source}}</td>
+            <th>외래/입원</th>
+            <td>{{value.place}}</td>
+        </tr>
+        <tr>
+            <th>내시경판독</th>
+            <td colspan="7">{{value.Dx}}</td>
+        </tr>
+        <tr>
+            <th id ="left-bottom">시술</th>
+            <td>{{value.procedure}}</td>
+            <th>조직소견</th>
+            <td colspan="5" id="right-bottom">{{value.Bx_result}}</td>
+        </tr>
+    </table>
+    <br>
+{% endfor %}
+</div>
+{% endblock %}

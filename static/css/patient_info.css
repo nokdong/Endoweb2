@@ -1,0 +1,64 @@
+table {
+    width: 100%;
+    border : 1px;
+}
+
+th {
+    background-color : #2874A6;
+    border : 0px;
+    color: white;
+}
+
+td {
+    background-color : #A9CCE3;
+    border : 0px;
+    text-align : center;
+}
+#date-title{
+    background: #378FC5;
+    background-clip: padding-box;
+    border-radius: 5px 0px 0px 0px;
+}
+#date {
+    background : #A1C8DF;
+    background-clip: padding-box;
+    border-radius: 0px 5px 0px 0px;
+}
+#left-bottom {
+    background-clip: padding-box;
+    border-radius: 0px 0px 0px 5px;
+}
+
+#right-bottom {
+    background-clip: padding-box;
+    border-radius: 0px 0px 5px 0px;
+}
+
+input[type=text], input[type=number], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+input[type=checkbox] {
+    display:inline;
+}
+label {
+    display: inline;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}

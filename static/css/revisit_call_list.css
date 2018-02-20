@@ -1,0 +1,106 @@
+.summary {
+    table-layout: fixed;
+    width: 50%;
+    white-space: nowrap;
+}
+
+.call_list{
+    table-layout : fixed;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.call_list th, td {
+    text-align : center;
+}
+.call_list th {
+    background-color: #5882FA;
+    color : white;
+}
+
+.called_list{
+    table-layout : fixed;
+    width: 100%;
+    white-space: nowrap;
+}
+.called_list th {
+    background-color: #5882FA;
+    color : white;
+}
+
+.visited_list{
+    table-layout : fixed;
+    width: 100%;
+    white-space: nowrap;
+}
+.visited_list th {
+    background-color: #5882FA;
+    color : white;
+}
+
+.short-form {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.col-name {
+    width: 8%;
+}
+.col-sex {
+    width: 1%;
+}
+.col-no {
+    width: 8%;
+}
+
+.col-birth {
+    width: 10%;
+}
+.col-phone {
+    width: 10%;
+}
+.col-date {
+    width: 10%;
+}
+.col-type {
+    width: 5%;
+}
+.col-Dr {
+    width: 5%;
+}
+.col-Dx {
+    width: 20%;
+}
+.col-Bx {
+    width: 20%;
+}
+.called-name{
+    width:8%;
+}
+.called-no{
+    width:5%;
+}
+.called-birth {
+    width: 10%;
+}
+.called-phone {
+    width: 10%;
+}
+.called-date {
+    width: 8%;
+}
+.called-type {
+    width: 5%;
+}
+.called-Dr {
+    width: 5%;
+}
+.called-Dx {
+    width: 15%;
+}
+.called-Bx {
+    width: 15%;
+}
+.called-dialog {
+    width: 15%;
+}

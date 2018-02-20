@@ -1,0 +1,51 @@
+table {
+    width: 100%;
+    border-style : none;
+    cellpadding:0px;
+    border-spacing:0px;
+    background-color : #CEE3F6;
+}
+
+
+.highestTitle th {
+    background-color : #2874A6;
+    border-top : 1px solid #CEE3F6;
+    border-right : 1px solid #CEE3F6;
+    border-left : 1px solid #CEE3F6;
+    color: white;
+}
+
+.subTitle th {
+    background-color : #2874A6;
+    border-right : 1px solid #CEE3F6;
+    border-left : 1px solid #CEE3F6;
+    border-bottom : 1px solid #CEE3F6;
+    color: white;
+}
+.month {
+    border-left : 1px solid #CEE3F6;
+    border-bottom : 1px solid #CEE3F6;
+}
+.PEG {
+    border-bottom : 1px solid #CEE3F6;
+}
+
+.reVisit {
+    border-right : 1px solid #CEE3F6;
+    border-bottom : 1px solid #CEE3F6;
+}
+
+td {
+    background-color : #9F81F7;
+    text-align : center;
+    color : white;
+}
+
+.total {
+    background-color: #2874A6;
+    color : white;
+}
+
+#eachMonth {
+    background-color : white;
+}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}환자 정보 입력해주세요 {% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/forms.css" %}{%endblock%}
+
+
+{% block content %}
+
+<div id="content">
+
+<form action="." method="post"> {% csrf_token %}
+    {% if form.errors %}
+    <p class="errornote"> 입력이 잘못 되었습니다. 다시 입력해주세요!~</p>
+    {% endif %}
+
+    <fieldset class="aligned">
+        <div class="form-row">
+            {{form.exam_date.label_tag}}{{form.exam_date}}
+        </div>
+        <div class="form-row">
+            {{form.exam_type.label_tag}}{{form.exam_type}}
+        </div>
+        <div class="form-row">
+            {{form.exam_doc.label_tag}}{{form.exam_doc}}
+        </div>
+        <div class="form-row">
+            {{form.exam_class.label_tag}}{{form.exam_class}}
+        </div>
+        <div class="form-row">
+            {{form.exam_place.label_tag}}{{form.exam_place}}
+        </div>
+        <div class="form-row">
+            {{form.patient_name.label_tag}}{{form.patient_name}}
+        </div>
+        <div class="form-row">
+            {{form.hospital_no.label_tag}}{{form.hospital_no}}
+        </div>
+        <div class="form-row">
+            {{form.patient_sex.label_tag}}{{form.patient_sex}}
+        </div>
+        <div class="form-row">
+            {{form.patient_birth.label_tag}}{{form.patient_birth}}
+        </div>
+        <div class="form-row">
+            {{form.patient_phone.label_tag}}{{form.patient_phone}}
+        </div>
+        <div class="form-row">
+            {{form.exam_Dx.label_tag}}{{form.exam_Dx}}
+        </div>
+        <div class="form-row">
+            {{form.exam_procedure.label_tag}}{{form.exam_procedure}}
+        </div>
+        <div class="form-row">
+            {{form.Bx_result.label_tag}}{{form.Bx_result}}
+        </div>
+        <div class="form-row">
+            {{form.follow_up.label_tag}}{{form.follow_up}}
+        </div>
+    </fieldset>
+    <div class="submit-row">
+        <input type="submit" value="저장"/>
+    </div>
+    <script type="text/javascript">document.getElementById('id_exam_date').focus();</script>
+
+    </form>
+</div>
+{% endblock %}

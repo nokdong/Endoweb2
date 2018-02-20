@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/patient_info.css" %}" >
+
+</head>
+<body>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+    $('#id_date, #id_birth').datepicker({
+    dayNamesMin: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+    monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+    dateFormat:'yy-mm-dd',
+    changeMonth:true,
+    changeYear: true,
+    yearRange:"1910:2018",
+    });
+});
+</script>
+<div id="content">
+    <h2> 신환입니다.</h2>
+
+    <form action="/procedure/add_endoscopy/" method="POST"> {% csrf_token %}
+        <table>
+            <tr>
+                <th>등록번호</th><td >{{patient_form.hospital_no}}</td><th>이름</th><td >{{patient_form.name}}</td>
+            </tr>
+            <tr>
+                <th>성별</th><td>{{patient_form.sex}}</td><th>생일</th><td>{{patient_form.birth}}</td>
+            </tr>
+            <tr>
+                <th>전화 번호</th><td >{{patient_form.phone}}</td><th>검사날짜</th><td >{{endoscopy_form.date}}</td>
+            </tr>
+            <tr>
+                <th>의사</th><td>{{endoscopy_form.doc}}</td><th>건진/진료</th><td>{{endoscopy_form.source}}</td>
+            </tr>
+            <tr>
+                <th>외래/입원</th><td>{{endoscopy_form.place}}</td><th>수면/일반</th><td>{{endoscopy_form.sleep}}</td>
+            </tr>
+            <tr>
+                <th>내시경종류</th><td>{{endoscopy_form.type}}</td>
+                <th>시 술</th><td>{{endoscopy_form.procedure}}</td>
+            </tr>
+            <tr>
+                <th>내시경판독</th><td colspan="3">{{endoscopy_form.Dx}}</td>
+            </tr>
+
+            <tr>
+                <th>추적검사</th><td>{{endoscopy_form.followup_period}}</td>
+                <td style = "background-color:white" colspan="2"><input type="submit" value="입력" /></td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('change', '#id_Dx', autoInputFollowup);
+        $("#id_type, #id_procedure").css({
+            "list-style-type": "none",
+            "display": "inline-block",
+            "text-align":"left",
+            "padding":"0px"
+            });
+        function autoInputFollowup() {
+            twoFour = "CSG Atrophic gastritis Erythematous gastritis colon polyp colon polyps";
+            twelve = "erosive gastritis erosion gastritis Gastric polyps  gastric polyps";
+            two = "ulcer";
+            var Dx = document.getElementById("id_Dx").value;
+            if (twoFour.includes(Dx)) {
+                document.getElementById("id_followup_period").value = 24;
+            } else if (twelve.includes(Dx)) {
+                document.getElementById("id_followup_period").value = 12;
+            } else if (two.includes(Dx)) {
+                document.getElementById("id_followup_period").value = 2;
+            };
+        };
+    })
+
+</script>

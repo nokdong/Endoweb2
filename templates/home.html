@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}home.html{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %} {% static "css/home.css" %}{% endblock %}
+{% block content %}
+
+    <div id="left_upper">
+        <h2> <font color ="#4641D9">우리가 고흥에서 내시경 제일 잘한다!</font></h2>
+        <ul>
+            <h2>
+            <li> 각 질환별 확실한 추적 검사</li>
+            <li> 조직 검사 누락 방지</li>
+            <li> 재내원률 향상</li>
+            </h2>
+        </ul>
+    </div>
+    <div id ="right_upper">
+        <br><br>
+       <ul>
+           <h2>
+               <li>조직검사 미입력자 : <font color ="red">{{none_Bx}}</font> 명</li>
+               <li>조직검사 통보할 사람 : <font color ="red">{{Bx_call}}</font> 명</li>
+               <li>판독 미입력자 : <font color ="red">{{none_reading}}</font> 명</li>
+               <li>전화 방문할 사람 : <font color ="red">{{will_phone}}</font>명</li>
+           </h2>
+       </ul>
+    </div>
+    <div id ="middle_left">
+        <h2> 금일 검사 요약</h2>
+        <table>
+        <tr>
+            <th> 검사 </th>
+            <th> 상부내시경 </th>
+            <th> 대장내시경</th>
+            <th> 직장내시경 </th>
+        </tr>
+        <tr>
+            <td> 건진</td>
+            <td> {{today_g_egd}}개</td>
+            <td> {{today_g_colon}}개</td>
+            <td rowspan="2"> {{today_sig}}개</td>
+        </tr>
+        <tr>
+            <td> 진료 </td>
+            <td> {{today_j_egd}}개</td>
+            <td> {{today_j_colon}}개</td>
+        </tr>
+        <tr>
+            <td> Total</td>
+            <td>{{today_total_egd}}개</td>
+            <td> {{today_total_colon}}개</td>
+            <td> {{today_sig}}개 </td>
+        </tr>
+        </table>
+    </div>
+
+    <div id ="middle_center">
+    <h2> 이번달 통계</h2>
+    <table>
+        <tr>
+            <th> 검사 </th>
+            <th> 상부내시경 </th>
+            <th> 대장내시경</th>
+            <th> 직장내시경 </th>
+        </tr>
+        <tr>
+            <td> 건진</td>
+            <td> {{month_g_egd}}개</td>
+            <td> {{month_g_colon}}개</td>
+            <td rowspan="2"> {{month_sig}}개</td>
+        </tr>
+        <tr>
+            <td> 진료 </td>
+            <td> {{month_j_egd}}개</td>
+            <td> {{month_j_colon}}개</td>
+        </tr>
+        <tr>
+            <td> Total</td>
+            <td>{{month_total_egd}}개</td>
+            <td> {{month_total_colon}}개</td>
+            <td> {{month_sig}}개 </td>
+        </tr>
+    </table>
+    </div>
+    <div id ="middle_right">
+    <h2> 용종 & 선종 발견율</h2>
+    <table>
+        <tr>
+            <th> </th>
+            <th> 이영재</th>
+            <th> 김신일</th>
+            <th> 병원 전체</th>
+        </tr>
+        <tr>
+            <td> <strong>대장내시경</strong></td>
+            <td> {{first_colon}}개</td>
+            <td> {{second_colon}}개</td>
+            <td> {{month_total_colon}} 개</td>
+        </tr>
+        <tr>
+            <td> <strong>용종발견율</strong></td>
+            <td> {{first_polyp_rate}}%</td>
+            <td> {{second_polyp_rate}}%</td>
+            <td> {{total_polyp_rate}}%</td>
+        </tr>
+        <tr>
+            <td> <strong>선종발견율</strong></td>
+            <td> {{first_adenoma_rate}}%</td>
+            <td> {{second_adenoma_rate}}%</td>
+            <td> {{total_adenoma_rate}}%</td>
+        </tr>
+    </table>
+    </div>
+    <div id ="low"><iframe src="/procedure/homethisyear" width="100%" height="400"></iframe>
+    </div>
+
+{% endblock %}
+

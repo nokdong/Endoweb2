@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/patient_info.css" %}" >
+
+</head>
+<body>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+    dayNamesMin: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+    monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+    dateFormat:'yy-mm-dd',
+    changeMonth:true,
+    changeYear: true,
+    yearRange:"2016:2020",
+    });
+});
+</script>
+    <h2> 검  색</h2>
+    <form action="/procedure/search/" method="post"> {% csrf_token %}
+        <table>
+            <tr>
+                <th>From</th><td>{{form.first_date}}</td><th>To</th><td>{{form.last_date}}</td>
+            </tr>
+            <tr>
+                <th>이름</th><td>{{form.name}}</td><th>등록번호</th><td>{{form.hospital_no}}</td>
+            </tr>
+            <tr>
+                <th>내시경진단</th><td>{{form.Dx}}</td><th>조직소견</th><td>{{form.Bx_result}}</td>
+            </tr>
+            <tr>
+                <th>검사종류</th><td>{{form.type}}</td><th>시술</th><td>{{form.procedure}}</td>
+            </tr>
+        </table>
+        <input type="submit" value="찾기" />
+    </form>
+
+    <br/><br/>
+
+    {%  if patient_number > 0 %}
+    <h3>총 {{patient_number}}명이 검색되었습니다.</h3>
+        <table>
+        <tr>
+            {% for list in searched_list %}
+            <th> {{list}}</th>
+            {% endfor %}
+        </tr>
+
+    {%  for name, info in patient_list.items %}
+        <tr>
+            <td class = "patient_name"><a href="{% url 'procedure:each_day_patient_info' info.id %}" onclick="window.open(this.href,'', 'width=600, height=600');return(false);"><font color="blue">{{ name }}</font></a></td>
+            {% for key, value in info.items %}
+            {% if key != 'id' %}
+                <td>{{value}}</td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+        </table>
+    {% else %}
+    <b><i>검색된 것이 없습니다.</i></b>
+    {%  endif %}
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_type, #id_procedure").css({
+            "list-style-type": "none",
+            "display": "inline-block",
+            "text-align":"left",
+            "padding":"0px"
+            });
+    })
+</script>

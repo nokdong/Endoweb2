@@ -1,0 +1,60 @@
+{%  extends "base.html" %}
+
+{% block title %}구간 검색 {% endblock %}
+
+{% block content %}
+<div id="content">
+    <h1> 구간 검색</h1>
+
+    <form action="." method="post"> {% csrf_token %}
+    {{ form.as_p }}
+        <input type="submit" value="찾기" />
+    </form>
+
+    <br/><br/>
+
+    {%  if object_list %}
+        <table>
+        <tr>
+        <th> 이름</th>
+        <th> 성별</th>
+        <th> No.</th>
+        <th> 생일</th>
+        <th> phone</th>
+        <th> 검사 날짜</th>
+        <th> 검사종류</th>
+        <th> Dr.</th>
+        <th> 건진/진료</th>
+        <th> 검사 경로</th>
+        <th> 진단명</th>
+        <th> 시술</th>
+        <th> 조직 소견</th>
+        <th> F/U</th>
+        <th> 전화여부</th>
+        <th> 재방문</th>
+        </tr>
+
+    {%  for list in object_list %}
+        <tr>
+        <td><a href="{% url 'procedure:search_update' list.id %}"><font color="blue">{{ list.patient_name }}</font></a></td>
+        <td>{{ list.patient_sex }}</td>
+        <td>{{ list.hospital_no}}</td>
+        <td>{{ list.patient_birth |  date:"y, m.d"}}</td>
+        <td>{{ list.patient_phone}}</td>
+        <td>{{ list.exam_date |  date:"y, m.d" }}</td>
+        <td>{{ list.exam_type }}</td>
+        <td>{{ list.exam_doc}}</td>
+        <td>{{ list.exam_class }}</td>
+        <td>{{ list.exam_place }}</td>
+        <td>{{ list.exam_Dx }}</td>
+        <td>{{ list.exam_procedure }}</td>
+        <td>{{ list.Bx_result }}</td>
+        <td>{{ list.follow_up }}</td>
+        <td>{{ list.phone_check }}</td>
+        <td>{{ list.re_visit }}</td>
+        </tr>
+    {% endfor %}
+        </table>
+    {%  endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/home2.css" %}" >
+
+</head>
+<body>
+<div id="content">
+    <h1> 로그인</h1>
+    <form action="." method="post">{% csrf_token %}
+    {% if form.errors %}
+        <p class="errornote"> 잘못 입력하였습니다.</p>
+    {% endif %}
+    <p> 아이디, 비번 입력해 주세요.</p>
+    <fieldset class ="aligned">
+        <div class="form-row">
+            {{form.username.label_tag }} {{form.username}}
+        </div>
+        <div class="form-row">
+            {{form.password.label_tag }} {{form.password}}
+        </div>
+    </fieldset>
+    <div class="submit-row">
+        <input type="submit" value="Log In"/>
+        <input type ="hidden" name="next" value="{{next}}" />
+    </div>
+    <script type="text/javascript">document.getElementById('id_username').focus();</script>
+    </form>
+</div>
+</body>

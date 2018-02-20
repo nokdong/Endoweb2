@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}녹동현대병원 내시경실{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" >
+    <link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}" />
+    {% block extrahead %}{% endblock %}
+
+
+</head>
+<body>
+
+<div id="header">
+    <h2 class="maintitle"><a href="#"> <a href="{% url 'home' %}"> 내시경 환자 관리 시스템 v 1.3</a></h2>
+    {% if user.is_active %}
+    <h4 class="welcome">Welcome,
+        <strong> {% firstof user.get_short_name user.get_username %}.</strong>
+        <a href="{% url 'password_change' %}"> Change Password</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </h4>
+    {% else %}
+    <h4 class="welcome"> 로그인해 주세요./
+        <a href=" {% url 'login' %}">Login</a>
+        <!-- <a href=" {% url 'register' %}">Register</a> -->
+    </h4>
+    {% endif %}
+
+</div>
+<div id ="menu">
+    <li><a href="{% url 'procedure:add_patient_initial' %}"> 환자추가하기</a></li>
+    <li><a href="#" >통계&bigtriangledown;</a>
+        <ul>
+            <!-- <li><a href="{% url 'procedure:today' %}"> 오늘 명단</a> </li>
+            <li><a href="{% url 'procedure:thismonth' %}"> 이번달 명단</a> </li>
+            <li><a href="{% url 'procedure:thisyear' %}"> 올해</a> </li> -->
+            <li><a href = "{% url 'procedure:thisyearsummary' %}"> 올해 총정리</a></li>
+        </ul>
+    </li>
+    <li><a href="#">조직검사&bigtriangledown;</a>
+        <ul>
+            <li id="Bx_input" onclick="bxInput()">입력해주세요</li>
+            <li id = "Bx_noti" onclick="bxNoti()">연락해주세요</li>
+        </ul>
+    </li>
+    <li><a href="{% url 'procedure:readinglist' %}">판독 입력</a></li>
+    <li><a href="{% url 'procedure:phone' %}">재방문전화</a></li>
+    <li><a href="{% url 'procedure:search' %}"> 검색</a></li>
+</div>
+{% block content %}{% block scripts %} {% endblock %}{% endblock %}
+
+</body>
+</html>

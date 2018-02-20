@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/home2.css" %}" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<div id="header">
+    <h2 class="maintitle"><a href="{% url 'home' %}"> <font color="#F2F2F2"> 내시경 환자 관리 시스템 v 2.0</font></a></h2>
+    {% if user.is_active %}
+    <h4 class="welcome">Welcome,
+        <strong> {% firstof user.get_short_name user.get_username %}.</strong>
+        <a href="{% url 'password_change' %}"> Change Password</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </h4>
+    {% else %}
+    <h4 class="welcome"> 로그인해 주세요./
+        <a href=" {% url 'login' %}">Login</a>
+        <!-- <a href=" {% url 'register' %}">Register</a> -->
+    </h4>
+    {% endif %}
+
+</div>
+<div class ="menu">
+    <a href="{% url 'procedure:add_patient_initial' %}" onclick="window.open(this.href,'', 'width=600, height=700');return(false);"> 환자추가 </a>
+    <div class="dropdown">
+    <button class = "dropbtn">통계</button>
+        <div class="dropdown-content">
+            <a href = "{% url 'procedure:thisyearsummary' %}" onclick="window.open(this.href,'', 'width=1400, height=600');return(false);"> 올해 총정리</a>
+        </div>
+    </div>
+    <div class="dropdown">
+    <button class = "dropbtn">조직검사</button>
+        <div class="dropdown-content">
+            <a href="#" id="Bx_input" onclick="bxInput()">입력해주세요</a>
+            <a href="#" id = "Bx_noti" onclick="bxNoti()">연락해주세요</a>
+        </div>
+    </div>
+    <a class = "each_menu" href="#" id = "reading_input" onclick="readingInput()" >판독 입력</a>
+    <a href="{% url 'procedure:phone' %}" onclick="window.open(this.href,'', 'width=1200, height=600');return(false);">재방문전화</a>
+    <a href="{% url 'procedure:search' %}" onclick="window.open(this.href,'', 'width=600, height=600');return(false);"> 검색</a>
+</div>
+<div id="main_calendar"></div>
+<div id="calendar"> </div>
+
+
+<script src="{% static "js/calendar.js" %}"></script>
+
+
+<div id ="upper_right">
+<h2 align="center"> 월별 요약</h2>
+    <table align="center">
+        <tr>
+            <th> 검사 </th>
+            <th> 상부내시경 </th>
+            <th> 대장내시경 </th>
+            <th> 직장내시경  </th>
+        </tr>
+        <tr>
+            <td> 건진</td>
+            <td id = "month_g_egd"> {{month_g_egd}}개</td>
+            <td id = "month_g_colon"> {{month_g_colon}}개</td>
+            <td rowspan="2" id = "month_sig"> {{month_sig}}개</td>
+        </tr>
+        <tr>
+            <td> 진료 </td>
+            <td id ="month_j_egd"> {{month_j_egd}}개</td>
+            <td id = "month_j_colon"> {{month_j_colon}}개</td>
+        </tr>
+        <tr>
+            <td> Total</td>
+            <td id = "month_total_egd">{{month_total_egd}}개</td>
+            <td id = "month_total_colon"> {{month_total_colon}}개</td>
+            <td id = "month_total_sig"> {{month_sig}}개 </td>
+        </tr>
+    </table>
+    </div>
+    <div id ="middle_right">
+    <h2> 용종 & 선종 발견율</h2>
+    <table align ="center">
+        <tr>
+            <th> </th>
+            <th> 이영재</th>
+            <th> 김신일</th>
+            <th> Total</th>
+        </tr>
+        <tr>
+            <td> <strong>대장내시경</strong></td>
+            <td id = "month_first_colon"> {{first_colon}}개</td>
+            <td id = "month_second_colon"> {{second_colon}}개</td>
+            <td id = "month_total_colon2"> {{month_total_colon}}개</td>
+        </tr>
+        <tr>
+            <td> <strong>용종발견율</strong></td>
+            <td id = "month_first_polyp_rate"> {{first_polyp_rate}}%</td>
+            <td id = "month_second_polyp_rate"> {{second_polyp_rate}}%</td>
+            <td id = "month_total_polyp_rate"> {{total_polyp_rate}}%</td>
+        </tr>
+        <tr>
+            <td> <strong>선종발견율</strong></td>
+            <td id = "month_first_adenoma_rate"> {{first_adenoma_rate}}%</td>
+            <td id = "month_second_adenoma_rate"> {{second_adenoma_rate}}%</td>
+            <td id = "month_total_adenoma_rate"> {{total_adenoma_rate}}%</td>
+        </tr>
+    </table>
+    </div>
+    <div id ="main_board">
+    <table id = "patient_list">
+        <caption>{{today}}
+        <tr>
+            <th>이 름</th>
+            <th>등록#</th>
+            <th> 나이(생일)</th>
+            <th> 성별</th>
+            <th> 의사</th>
+            <th>검사</th>
+            <th align="left">시술</th>
+            <th align="left">내시경소견</th>
+        </tr>
+        {% for name, info in today_patient_list.items %}
+            <tr>
+                <td><a  href="{% url 'procedure:each_day_patient_info' info.id %}" onclick="window.open(this.href,'', 'width=600, height=600');return(false);"><font color = "blue"> {{name}}</a></font></td>
+                <td>{{info.hospital_no}}</td>
+                <td>{{info.age}}({{info.birthday}})</td>
+                <td>{{info.sex}}</td>
+                <td>{{info.doc}}</td>
+                <td>{{info.type}}</td>
+                <td align="left">{{info.procedure}}</td>
+                <td align="left">{{info.Dx}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <div id="noti_summary">
+        <table>
+            <tr align="left">
+                <th>조직검사 미입력: {{none_Bx}}</th><th>조직검사 통보: {{Bx_call}}</th>
+            </tr>
+            <tr align="left">
+                <th>판독미입력: {{none_reading}}</th><th>재방문통보: {{will_phone}}</th>
+            </tr>
+        </table>
+    </div>
+    <div id ="low"><iframe src="/procedure/homethisyear" width="100%" height="400"></iframe>
+    </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('click', '.arrow', headerChange);
+        $(document).on('change', '.month-header', headerChange);
+        $(document).on('click', '.calendar-cell, .today', eachDayClick);
+        $(document).on('click', '.patient_info', patientInfo);
+        $(document).on('mouseenter', '.today, .calendar-cell', daySummary);
+    });
+
+        function daySummary() {
+            var each_cell = $(this);
+            day_text = each_cell.text();
+            var time = this.querySelector('time');
+            formalTime = new Date (time.getAttribute('datetime'));
+            var year = formalTime.getFullYear();
+            var month = formalTime.getMonth();
+            var date = formalTime.getDate();
+            var mouse_pos = each_cell.position();
+            day_of_week = each_cell.children().attr("data-dayofweek");
+            var lay_pop = document.createElement('div');
+            lay_pop.id ="pop_"+each_cell.attr("id");
+            lay_pop.className = "each-day-window";
+            if (day_of_week =="수" ||day_of_week =="목" ||day_of_week =="금" || day_of_week =="토") {
+                if (day_text == '1') {
+                    lay_pop.style["left"]= (mouse_pos.left+72)+"px";
+                } else {
+                    lay_pop.style["left"]= (mouse_pos.left-120)+"px";
+                };
+            } else {
+                lay_pop.style["left"]= (mouse_pos.left+49)+"px";
+            };
+            lay_pop.style["top"]= (mouse_pos.top-13)+"px";
+            summary = document.createElement('table');
+            summary.cellpadding = "0";
+            summary.id = "summary_table";
+            lay_pop.appendChild(summary);
+            eachDayMouseOn(year, month, date);
+            each_cell.append(lay_pop);
+            each_cell.mouseleave( function() {
+                lay_pop.remove();
+            });
+        };
+
+        function eachDayMouseOn(year, month, date) {
+            $.ajax({
+                type : "POST",
+                url : "{% url 'procedure:each_day_mouse_on_for_ajax' %}",
+                data : {'year':year, 'month':month, 'date':date, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType : 'json',
+                success : function(response) {
+                    var html_data = "<tr><th>검사</th><th>상부</th><th>하부</th><th>직장</th></tr><tr><td>건진</td><td>"+response.g_egd+"</td><td>"+response.g_colon+"</td><td rowspan=\"2\">"+response.sig+"</td></tr><tr><td>진료</td><td>"+response.j_egd+"</td><td>"+response.j_colon+"</td></tr><tr><td>총합</td><td>"+response.total_egd+"</td><td>"+response.total_colon+"</td><td>"+response.sig+"</td></tr></table>"
+                    var summary = document.getElementById("summary_table");
+                    if (summary !=null) {
+                        summary.innerHTML = html_data
+                    };
+                }, // success 끝
+            }); // ajax 끝
+        }; // eachDayMouseOn 끝
+
+        function headerChange() {
+            var year = $("#yearList option:selected").val();
+            var month = $("#monthList option:selected").val();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'procedure:thismonth_for_ajax' %}",
+                data: {'year': year, 'month': month, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json",
+                success : function(response) {
+                    $("#month_g_egd").html(response.g_egd+"개");
+                    $("#month_j_egd").html(response.j_egd+"개");
+                    $("#month_total_egd").html(response.total_egd+"개");
+                    $("#month_g_colon").html(response.g_colon+"개");
+                    $("#month_j_colon").html(response.j_colon+"개");
+                    $("#month_sig").html(response.sig+"개");
+                    $("#month_total_colon").html(response.total_colon+"개");
+                    $("#month_total_colon2").html(response.total_colon+"개");
+                    $("#month_total_sig").html(response.sig+"개");
+                    $("#month_first_colon").html(response.first_colon+"개");
+                    $("#month_first_polyp_rate").html(response.first_polyp_rate+"%");
+                    $("#month_first_adenoma_rate").html(response.first_adr+"%");
+                    $("#month_second_colon").html(response.second_colon+"개");
+                    $("#month_second_polyp_rate").html(response.second_polyp_rate+"%");
+                    $("#month_second_adenoma_rate").html(response.second_adr+"%");
+                    $("#month_total_polyp_rate").html(response.total_polyp_rate+"%");
+                    $("#month_total_adenoma_rate").html(response.total_adenoma_rate+"%");
+
+                }, // success 끝
+            }); //ajax 끝
+        }; //  nextarrow click 인지 끝
+
+        function readingInput() {
+            $.ajax({
+                url : "{% url 'procedure:reading_input_for_ajax' %}",
+                dataType: 'json',
+                success : function(response) {
+                    var eachPatientList = document.getElementById("patient_list");
+                    eachPatientList.remove();
+                    eachPatientList = document.createElement('table');
+                    eachPatientList.id = "patient_list";
+                    document.getElementById('main_board').appendChild(eachPatientList);
+                    eachPatientList.innerHTML += "<caption>판독미입력(" + response.endo_list_num + "명)<tr><th>이 름</th><th>등록#</th><th> 나이(생일)</th><th> 성별</th><th>검사일</th><th> 의사</th><th>검사</th><th>시술</th></tr>";
+                    for (name in response) {
+                        if (name == "endo_list_num") {
+                            continue;
+                        }
+                        eachPatientList.innerHTML +="<tr><td class = \"patient_info\" id="  +response[name].id + "><font color=\"blue\">" + name + "</font></a></td> <td>"+ response[name].hospital_no + "</td><td>"+ response[name].age +"("+ response[name].birthday + ")" + "</td><td>"+ response[name].sex+ "</td><td>"+ response[name].date + "</td><td>" + response[name].doc+"</td> <td>"+response[name].type+ "</td><td>"+response[name].procedure+"</td></tr>";
+                    } // for 끝
+                }, // success 종료
+            }); // ajax 끝
+        }; // readingInput 함수 종료
+
+        function bxNoti() {
+            $.ajax({
+                url : "{% url 'procedure:bx_noti_for_ajax' %}",
+                dataType : 'json',
+                success : function(response) {
+                    var eachPatientList = document.getElementById("patient_list");
+                    eachPatientList.remove();
+                    eachPatientList = document.createElement('table');
+                    eachPatientList.id = "patient_list";
+                    document.getElementById('main_board').appendChild(eachPatientList);
+                    eachPatientList.innerHTML += "<caption>조직검사 통보(" + response.endo_list_num + "명)<tr><th>이 름</th><th>등록#</th><th> 나이(생일)</th><th> 성별</th><th>검사일</th><th> 의사</th><th>검사</th><th align=\"left\">조직검사</th></tr>";
+                    for (name in response) {
+                        if (name == "endo_list_num") {
+                            continue;
+                        }
+                        eachPatientList.innerHTML +="<tr><td class = \"patient_info\" id="  +response[name].id + "><font color=\"blue\">" + name + "</font></a></td> <td>"+ response[name].hospital_no + "</td><td>"+ response[name].age +"("+ response[name].birthday + ")" + "</td><td>"+ response[name].sex+ "</td><td>"+ response[name].date + "</td><td>" + response[name].doc+"</td> <td>"+response[name].type+ "</td><td align=\"left\">"+response[name].Bx_result+"</td></tr>";
+                    } // for 끝
+                }, // success 끝
+            }); // ajax 끝
+        }; //bxNoti 함수 종료
+
+        function bxInput() {
+            $.ajax({
+                url : "{% url 'procedure:bx_input_for_ajax' %}",
+                dataType : 'json',
+                success : function(response) {
+                    var eachPatientList = document.getElementById("patient_list");
+                    eachPatientList.remove();
+                    eachPatientList = document.createElement('table');
+                    eachPatientList.id = "patient_list";
+                    document.getElementById('main_board').appendChild(eachPatientList);
+                    eachPatientList.innerHTML += "<caption>조직검사 입력(" + response.endo_list_num + "명)<tr><th>이 름</th><th>등록#</th><th> 나이(생일)</th><th> 성별</th><th>검사일</th><th> 의사</th><th>검사</th><th>시술</th></tr>";
+                    for (name in response) {
+                        if (name == "endo_list_num") {
+                            continue;
+                        }
+                        eachPatientList.innerHTML +="<tr><td class = \"patient_info\" id="  +response[name].id + "><font color=\"blue\">" + name + "</font></a></td> <td>"+ response[name].hospital_no + "</td><td>"+ response[name].age +"("+ response[name].birthday + ")" + "</td><td>"+ response[name].sex+ "</td><td>" + response[name].date + "</td><td>" + response[name].doc+"</td> <td>"+response[name].type+ "</td><td>"+response[name].procedure+"</td></tr>";
+                    } // for 끝
+                }, // success 끝
+            }); // ajax 끝
+        }; //bxInput 함수 종료
+
+        function eachDayClick() {
+            var time = this.querySelector('time');
+            formalTime = new Date (time.getAttribute('datetime'));
+            var year = formalTime.getFullYear();
+            var month = formalTime.getMonth();
+            var date = formalTime.getDate();
+            $.ajax({
+                type : "POST",
+                url : "{% url 'procedure:each_day_patient_list_for_ajax' %}",
+                data : {'year':year, 'month':month, 'date':date, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType : 'json',
+                success : function(response) {
+                    var eachPatientList = document.getElementById("patient_list");
+                    eachPatientList.remove();
+                    eachPatientList = document.createElement('table');
+                    eachPatientList.id = "patient_list";
+                    document.getElementById('main_board').appendChild(eachPatientList);
+                    eachPatientList.innerHTML += "<caption>"+response.selected_day+ "<tr><th>이 름</th><th>등록#</th><th> 나이(생일)</th><th> 성별</th><th> 의사</th><th>검사</th><th align=\"left\">시술</th><th align=\"left\">내시경소견</th></tr>";
+                    for (name in response) {
+                        if (name == "selected_day") {
+                            continue;
+                        }
+                        eachPatientList.innerHTML +="<tr><td class = \"patient_info\" id="  +response[name].id + "><font color=\"blue\">" + name + "</font></a></td> <td>"+ response[name].hospital_no + "</td><td>"+ response[name].age +"("+ response[name].birthday + ")" + "</td><td>"+ response[name].sex+ "</td><td>"+ response[name].doc+"</td> <td>"+response[name].type+ "</td><td align=\"left\">"+response[name].procedure+"</td><td align=\"left\">"+response[name].Dx +"</td></tr>";
+                    } // for 끝
+
+                }, //success 끝
+            }); //ajax 끝
+        }; //eachDayClick 끝
+
+        function patientInfo() {
+            var patient_id = this.id;
+            $.ajax({
+                type : "POST",
+                url : "{% url 'procedure:each_day_patient_info' %}",
+                data: {'patient_id': patient_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType : 'html',
+                success: function(data) {
+                var x=window.open('','','width=600, height=600');
+                x.document.open().write(data);
+                },
+            }); //ajax 끝
+        }; // 환자 이름 클릭 인지 끝
+</script>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>녹동현대병원 내시경실</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/yearsummary.css" %}" >
+
+</head>
+<body>
+<h2>올해 요약정리</h2>
+    <table>
+        <tr class="highestTitle">
+            <th rowspan="2" valign="middle" class="month"> 월</th>
+            <th> 위 내 시 경</th>
+            <th> 대 장 내 시 경</th>
+            <th> 용 종 발 견 율 (%)</th>
+            <th> 선 종 발 견 율 (%)</th>
+            <th rowspan="2" class="PEG"> PEG</th>
+            <th rowspan="2" class="reVisit">재내원율 (%)</th>
+        </tr>
+        <tr class="subTitle">
+            <th>Total : 검진 / 진료</th>
+            <th>Total : 검진 / 진료</th>
+            <th>Total : 1내과(대장내시경수) / 2내과(대장내시경수)</th>
+            <th>Total : 1내과(대장내시경수) / 2내과(대장내시경수)</th>
+        </tr>
+
+    {% for k, v in monthly_total_data.items %}
+        <tr class="eachMonth">
+            <td id ="month_{{k}}"><strong>{{k}}</strong></td>
+            <td><strong>{{v.total_egd}}</strong> : {{v.g_egd}} / {{v.j_egd}}</td>
+            <td><strong>{{v.sig_included_total_colon}}</strong> : {{v.g_colon}} / {{v.j_colon_including_sig}}</td>
+            <td><strong>{{v.total_polyp_rate}}</strong> : {{v.first_polyp_rate}} ({{v.first_colon}}) / {{v.second_polyp_rate}} ({{v.second_colon}})</td>
+            <td><strong>{{v.total_adenoma_rate}}</strong> : {{v.first_adr}} ({{v.first_colon}}) / {{v.second_adr}} ({{v.second_colon}})</td>
+            <td><strong>{{v.PEG}}</strong></td>
+            <td><strong>{{v.re_visit}}</strong></td>
+        </tr>
+    {% endfor %}
+        <tr id="total">
+            <td class="total">총합</td>
+            <td class="total"><strong>{{until_now_total.until_now_total_egd}}</strong> : {{until_now_total.until_now_g_egd}} / {{until_now_total.until_now_j_egd}}</td>
+            <td class="total"><strong>{{until_now_total.until_now_total_colon_including_sig}}</strong> : {{until_now_total.until_now_g_colon}} / {{until_now_total.until_now_j_colon}}</td>
+            <td class="total"><strong>{{until_now_total.until_now_total_average_pdr}}</strong> : {{until_now_total.until_now_average_first_pdr}} ({{until_now_total.until_now_first_colon}}) / {{until_now_total.until_now_average_second_pdr}} ({{until_now_total.until_now_second_colon}})</td>
+            <td class="total"><strong>{{until_now_total.until_now_total_average_adr}}</strong> : {{until_now_total.until_now_average_first_adr}} ({{until_now_total.until_now_first_colon}}) / {{until_now_total.until_now_average_second_adr}} ({{until_now_total.until_now_second_colon}})</td>
+            <td class="total"><strong>{{until_now_total.until_now_PEG}}</strong></td>
+            <td class="total"><strong>{{until_now_total.until_now_re_visit}}</strong></td>
+    </tr>
+    </table>
+</body>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var months = $(".eachMonth");
+        var monthLen = months.length;
+        for (i=1;i<=monthLen;i++) {
+            if (i % 2 ==0) {
+                id_name = "month_"+i;
+                $("#"+id_name).css("background-color","#85929E");
+                $("#"+id_name).nextAll().css("background-color","#85929E");
+            } else {
+                id_name = "month_"+i;
+                $("#"+id_name).css("background-color","#AEB6BF");
+                $("#"+id_name).nextAll().css("background-color","#AEB6BF");
+            };
+        };
+    })
+</script>

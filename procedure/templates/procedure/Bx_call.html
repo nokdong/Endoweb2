@@ -1,0 +1,41 @@
+{%  extends "base.html" %}
+
+{% block title %}조직검사 결과 입력해주세요 {% endblock %}
+
+{% block content %}
+<div id="content">
+    <h1> 조직검사 결과, 전화 통보해주세요</h1>
+        <table>
+        <tr>
+        <th> 이름</th>
+        <th> 성별</th>
+        <th> No.</th>
+        <th> 생일</th>
+        <th> 검사 날짜</th>
+        <th> 검사종류</th>
+        <th> Dr.</th>
+        <th> 건진/진료</th>
+        <th> 검사 경로</th>
+        <th> 진단명</th>
+        <th> 조직검사결과</th>
+        </tr>
+    {% for list in object_list %}
+    {% if list.Bx_result_call == "." %}
+    <tr>
+        <td><a href="{% url 'procedure:Bx_call' list.id %}"><font color="blue">{{ list.patient_name }}</font></a></td>
+        <td>{{ list.patient_sex }}</td>
+        <td>{{ list.hospital_no}}</td>
+        <td>{{ list.patient_birth |  date:"y, m.d"}}</td>
+        <td>{{ list.exam_date |  date:"y, m.d" }}</td>
+        <td>{{ list.exam_type }}</td>
+        <td>{{ list.exam_doc}}</td>
+        <td>{{ list.exam_class }}</td>
+        <td>{{ list.exam_place }}</td>
+        <td>{{ list.exam_Dx }}</td>
+        <td>{{ list.Bx_result }}</td>
+        </tr>
+     {% endif %}
+     {% endfor %}
+        </table>
+</div>
+{% endblock %}
