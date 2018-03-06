@@ -85,7 +85,7 @@ $(document).ready(function() {
 
             <tr>
                 <th>추적검사</th><td >{{endoscopyform.followup_period}}</td>
-                <td style = "background-color:white" colspan="2"><input type="submit" value="입력" /></td>
+                <td style = "background-color:white" colspan="2"><input type="submit" id = "button" value="입력" /></td>
             </tr>
         </table>
         <input type="hidden" name ="fk" value ={{fk}}>
@@ -113,6 +113,13 @@ $(document).ready(function() {
             } else if (two.includes(Dx)) {
                 document.getElementById("id_followup_period").value = 2;
             };
+        };
+        var btn = document.getElementById("button");
+        btn.onclick = function () {
+            var childWindow = window.parent;
+            var parentWindow = childWindow.opener;
+            var examDate = document.getElementById("id_date").value;
+            parentWindow.reload(examDate);
         };
     })
 

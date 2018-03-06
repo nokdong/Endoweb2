@@ -36,7 +36,7 @@ $(document).ready(function() {
                 <th>성별</th><td>{{patient_form.sex}}</td><th>생일</th><td>{{patient_form.birth}}</td>
             </tr>
             <tr>
-                <th>전화 번호</th><td >{{patient_form.phone}}</td><th>검사날짜</th><td >{{endoscopy_form.date}}</td>
+                <th>전화 번호</th><td >{{patient_form.phone}}</td><th>검사날짜</th><td>{{endoscopy_form.date}}</td>
             </tr>
             <tr>
                 <th>의사</th><td>{{endoscopy_form.doc}}</td><th>건진/진료</th><td>{{endoscopy_form.source}}</td>
@@ -51,10 +51,9 @@ $(document).ready(function() {
             <tr>
                 <th>내시경판독</th><td colspan="3">{{endoscopy_form.Dx}}</td>
             </tr>
-
             <tr>
                 <th>추적검사</th><td>{{endoscopy_form.followup_period}}</td>
-                <td style = "background-color:white" colspan="2"><input type="submit" value="입력" /></td>
+                <td style = "background-color:white" colspan="2"><input type="submit" id = "button" value="입력" /></td>
             </tr>
         </table>
     </form>
@@ -83,6 +82,15 @@ $(document).ready(function() {
                 document.getElementById("id_followup_period").value = 2;
             };
         };
+        var btn = document.getElementById("button");
+        btn.onclick = function () {
+            var childWindow = window.parent;
+            var parentWindow = childWindow.opener;
+            var examDate = document.getElementById("id_date").value;
+            parentWindow.reload(examDate);
+        };
     })
+
+
 
 </script>

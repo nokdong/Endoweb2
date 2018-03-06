@@ -27,7 +27,7 @@
 
 </div>
 <div class ="menu">
-    <a href="{% url 'procedure:add_patient_initial' %}" onclick="window.open(this.href,'', 'width=600, height=700');return(false);"> 환자추가 </a>
+    <a onclick="popupForPatient()"> 환자추가 </a>
     <div class="dropdown">
     <button class = "dropbtn">통계</button>
         <div class="dropdown-content">
@@ -146,8 +146,9 @@
             </tr>
         </table>
     </div>
-    <div id ="low"><iframe src="/procedure/homethisyear" width="100%" height="400"></iframe>
+    <div id ="low"><iframe id='graph' src="/procedure/homethisyear" width="100%" height="400"></iframe>
     </div>
+    <input type="hidden" id="hidden" value="bxInput">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -157,6 +158,11 @@
         $(document).on('click', '.patient_info', patientInfo);
         $(document).on('mouseenter', '.today, .calendar-cell', daySummary);
     });
+
+        function popupForPatient() {
+            var win = window.open(this.href,'', 'width=600, height=600');
+            win.document.write('<iframe width="100%", height="100%" src="{% url 'procedure:add_patient_initial' %}" frameborder="0"></iframe>')
+        }
 
         function daySummary() {
             var each_cell = $(this);
@@ -261,6 +267,7 @@
         }; // readingInput 함수 종료
 
         function bxNoti() {
+            $('#hidden').val('bxNoti');
             $.ajax({
                 url : "{% url 'procedure:bx_noti_for_ajax' %}",
                 dataType : 'json',
@@ -282,6 +289,7 @@
         }; //bxNoti 함수 종료
 
         function bxInput() {
+            $('#hidden').val('bxInput');
             $.ajax({
                 url : "{% url 'procedure:bx_input_for_ajax' %}",
                 dataType : 'json',
@@ -302,9 +310,36 @@
             }); // ajax 끝
         }; //bxInput 함수 종료
 
-        function eachDayClick() {
-            var time = this.querySelector('time');
-            formalTime = new Date (time.getAttribute('datetime'));
+        function reload(examDate) {
+            setTimeout(function() {
+                eachDayClick(examDate);
+                headerChange();
+                document.getElementById('graph').contentDocument.location.reload(true);}, 3000);
+        };
+
+        function reloadBx() {
+            $token = $('#hidden').val()
+            if ($token == 'bxInput') {
+                setTimeout(function() {
+                    bxInput();}, 3000);
+            } else if ($token == 'bxNoti') {
+                setTimeout(function() {
+                    bxNoti();}, 3000);
+            };
+        };
+
+        function reloadBxNoti() {
+            setTimeout(function() {
+                bxNoti();}, 3000);
+        };
+
+        function eachDayClick(examDate) {
+            if (typeof(examDate) === 'object') {
+                var time = this.querySelector('time');
+                formalTime = new Date (time.getAttribute('datetime'));
+            } else {
+                formalTime = new Date(examDate);
+            };
             var year = formalTime.getFullYear();
             var month = formalTime.getMonth();
             var date = formalTime.getDate();
@@ -333,6 +368,8 @@
 
         function patientInfo() {
             var patient_id = this.id;
+            var token = $('#hidden').val();
+            console.log(token);
             $.ajax({
                 type : "POST",
                 url : "{% url 'procedure:each_day_patient_info' %}",
@@ -340,7 +377,7 @@
                 dataType : 'html',
                 success: function(data) {
                 var x=window.open('','','width=600, height=600');
-                x.document.open().write(data);
+                x.document.write(data);
                 },
             }); //ajax 끝
         }; // 환자 이름 클릭 인지 끝

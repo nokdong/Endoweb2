@@ -22,6 +22,7 @@ $(document).ready(function() {
     changeYear: true,
     yearRange:"2016:2020",
     });
+
 });
 </script>
 <div id="content">
@@ -29,10 +30,8 @@ $(document).ready(function() {
 
     <form action="/procedure/add_patient_initial/" method="post"> {% csrf_token %}
     {{ form.as_p }}
-        <input type="submit" value="입력" />
-
+        <input type="submit" id="button" value="입력" />
     </form>
-
     <br/><br/>
 </div>
 </body>
