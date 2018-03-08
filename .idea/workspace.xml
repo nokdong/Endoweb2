@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3939ec73-7277-4427-be86-e0d480cb990a" name="Default" comment="" />
+    <list default="true" id="3939ec73-7277-4427-be86-e0d480cb990a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Endoweb v2.iml" afterPath="$PROJECT_DIR$/.idea/Endoweb v2.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" afterPath="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" />
+      <change beforePath="$PROJECT_DIR$/procedure/templates/procedure/vbar.html" afterPath="$PROJECT_DIR$/procedure/templates/procedure/vbar.html" />
+      <change beforePath="$PROJECT_DIR$/procedure/urls.py" afterPath="$PROJECT_DIR$/procedure/urls.py" />
+      <change beforePath="$PROJECT_DIR$/procedure/views.py" afterPath="$PROJECT_DIR$/procedure/views.py" />
+      <change beforePath="$PROJECT_DIR$/templates/home2.html" afterPath="$PROJECT_DIR$/templates/home2.html" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/procedure/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="581" column="45" lean-forward="false" selection-start-line="581" selection-start-column="31" selection-end-line="581" selection-end-column="45" />
+            <state relative-caret-position="223">
+              <caret line="1110" column="25" lean-forward="true" selection-start-line="1110" selection-start-column="25" selection-end-line="1110" selection-end-column="25" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -33,41 +42,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nonexisting_patient_adding_endoscopy.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/nonexisting_patient_adding_endoscopy.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="632">
-              <caret line="90" column="10" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="90" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="existing_patient_adding_endoscopy.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/existing_patient_adding_endoscopy.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="95" column="34" lean-forward="true" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="endoscopy_info_update.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="78" column="33" lean-forward="false" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="home2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/home2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="355" column="49" lean-forward="false" selection-start-line="355" selection-start-column="49" selection-end-line="355" selection-end-column="49" />
+            <state relative-caret-position="1545">
+              <caret line="195" column="46" lean-forward="true" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/procedure/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="23" column="69" lean-forward="false" selection-start-line="23" selection-start-column="69" selection-end-line="23" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nonexisting_patient_adding_endoscopy.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/nonexisting_patient_adding_endoscopy.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1349">
+              <caret line="71" column="38" lean-forward="false" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="existing_patient_adding_endoscopy.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/existing_patient_adding_endoscopy.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2242">
+              <caret line="125" column="9" lean-forward="false" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -76,8 +85,8 @@
       <file leaf-file-name="each_day_patient_info.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/each_day_patient_info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="45" column="23" lean-forward="false" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
+            <state relative-caret-position="494">
+              <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -94,15 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add_endo</find>
-      <find>formset.form</find>
-      <find>def phon</find>
-      <find>def ph</find>
-      <find>Bx_no</find>
-      <find>home2</find>
-      <find>nonexis</find>
-      <find>id_Dx</find>
-      <find>search</find>
       <find>eachdaycl</find>
       <find>open</find>
       <find>eachDay</find>
@@ -118,12 +118,21 @@
       <find>opener</find>
       <find>exam</find>
       <find>each_day_pa</find>
-      <find>reload</find>
       <find>endoscopy_info</find>
       <find>ifra</find>
       <find>input</find>
       <find>bxIn</find>
       <find>reloadBxInput</find>
+      <find>reload</find>
+      <find>console.</find>
+      <find>home2</find>
+      <find>this_month_for_</find>
+      <find>will</find>
+      <find>_ajax</find>
+      <find>today</find>
+      <find>ajax</find>
+      <find>noti_summ</find>
+      <find>bx_noti_for</find>
     </findStrings>
     <replaceStrings>
       <replace>patient_list</replace>
@@ -143,7 +152,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -167,21 +176,21 @@
         <option value="$PROJECT_DIR$/procedure/templates/procedure/post_search.html" />
         <option value="$PROJECT_DIR$/static/css/home2.css" />
         <option value="$PROJECT_DIR$/procedure/admin.py" />
-        <option value="$PROJECT_DIR$/procedure/urls.py" />
         <option value="$PROJECT_DIR$/procedure/forms.py" />
         <option value="$PROJECT_DIR$/procedure/models.py" />
         <option value="D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m01_심플배너만들기/step01_01_방법1_left속성을_이용한_풀이.html" />
         <option value="D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m03_드래그앤드드롭만들기/step02_01_기본드래그기능_구현.html" />
         <option value="$PROJECT_DIR$/procedure/templates/procedure/add_patient_initial.html" />
         <option value="$PROJECT_DIR$/procedure/templates/procedure/nonexisting_patient_adding_endoscopy.html" />
-        <option value="$PROJECT_DIR$/procedure/views.py" />
-        <option value="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" />
-        <option value="$PROJECT_DIR$/templates/home2.html" />
         <option value="$PROJECT_DIR$/procedure/templates/procedure/existing_patient_adding_endoscopy.html" />
+        <option value="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" />
+        <option value="$PROJECT_DIR$/procedure/urls.py" />
+        <option value="$PROJECT_DIR$/templates/home2.html" />
+        <option value="$PROJECT_DIR$/procedure/views.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-4" />
     <option name="y" value="-4" />
     <option name="width" value="1288" />
@@ -224,8 +233,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -252,13 +259,6 @@
             <path>
               <item name="Endoweb v2" type="b2602c69:ProjectViewProjectNode" />
               <item name="Endoweb v2" type="462c0819:PsiDirectoryNode" />
-              <item name="procedure" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="procedure" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Endoweb v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Endoweb v2" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -276,6 +276,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -295,7 +297,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.runserver(office)">
+  <component name="RunManager" selected="Python.run(home)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -448,18 +450,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="1004" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21953125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1453125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3227513" sideWeight="0.14270833" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.205074" sideWeight="0.85729164" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20572057" sideWeight="0.85729164" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -602,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/procedure/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="21" column="4" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/post_search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-433">
@@ -651,35 +647,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/procedure/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1007">
-          <caret line="56" column="52" lean-forward="false" selection-start-line="56" selection-start-column="52" selection-end-line="56" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m03_드래그앤드드롭만들기/step02_04_02_문제점해결.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="138" column="40" lean-forward="true" selection-start-line="138" selection-start-column="40" selection-end-line="138" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m03_드래그앤드드롭만들기/step02_01_기본드래그기능_구현.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m01_심플배너만들기/step01_01_방법1_left속성을_이용한_풀이.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m03_드래그앤드드롭만들기/step02_04_02_문제점해결.html" />
+    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m03_드래그앤드드롭만들기/step02_01_기본드래그기능_구현.html" />
+    <entry file="file://D:/04부_jQuery_기초와활용/08장_위치크기다루기/lesson06_미션/01_complete/m01_심플배너만들기/step01_01_방법1_left속성을_이용한_풀이.html" />
     <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/patient_info_update.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
@@ -694,53 +664,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/procedure/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="581" column="45" lean-forward="false" selection-start-line="581" selection-start-column="31" selection-end-line="581" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/each_day_patient_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="45" column="23" lean-forward="false" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="78" column="33" lean-forward="false" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="355" column="49" lean-forward="false" selection-start-line="355" selection-start-column="49" selection-end-line="355" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/nonexisting_patient_adding_endoscopy.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="632">
-          <caret line="90" column="10" lean-forward="false" selection-start-line="84" selection-start-column="8" selection-end-line="90" selection-end-column="10" />
+        <state relative-caret-position="1349">
+          <caret line="71" column="38" lean-forward="false" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/existing_patient_adding_endoscopy.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="95" column="34" lean-forward="true" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="34" />
+        <state relative-caret-position="2242">
+          <caret line="125" column="9" lean-forward="false" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="71" column="11" lean-forward="false" selection-start-line="71" selection-start-column="11" selection-end-line="71" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/procedure/templates/procedure/each_day_patient_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/procedure/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="23" column="69" lean-forward="false" selection-start-line="23" selection-start-column="69" selection-end-line="23" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/procedure/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1007">
+          <caret line="56" column="52" lean-forward="false" selection-start-line="56" selection-start-column="52" selection-end-line="56" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1545">
+          <caret line="195" column="46" lean-forward="true" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/procedure/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="1110" column="25" lean-forward="true" selection-start-line="1110" selection-start-column="25" selection-end-line="1110" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

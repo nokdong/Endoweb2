@@ -76,7 +76,8 @@
         btn.onclick = function () {
             var childWindow = window.parent;
             var parentWindow = childWindow.opener;
-            parentWindow.reloadBx();
+            var examDate = document.getElementById("initial-id_date").value;
+            parentWindow.reload(examDate);
         };
 
 </script>

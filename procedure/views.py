@@ -1025,7 +1025,7 @@ def home(request):
     none_Bx = 0  # Bx 결과 안들어 간 사람
     Bx_call = 0  # Bx 결과 전화 통보 해 줘야 할 사람
     none_reading = 0  # 판독 안들어 간 사람
-    will_phone = 0  # 전화해야할 사람
+    will_call = 0  # 전화해야할 사람
 
     today_g_egd, today_j_egd = 0, 0
     today_g_colon, today_j_colon = 0, 0
@@ -1076,7 +1076,7 @@ def home(request):
         today_patient_list[patient.name] = {'hospital_no': hospital_no, 'age': patient_age, 'birthday': birth_string,
                                  'type': type, 'doc': exam.doc,
                                  'sex': patient.sex, 'id':exam.patient_id, 'Dx':exam.Dx, 'procedure':exam.procedure }
-    context = {'today':today, 'today_patient_list':today_patient_list, 'none_Bx': 0, 'Bx_call': 0, 'none_reading': 0, 'will_phone': 0,
+    context = {'today':today, 'today_patient_list':today_patient_list, 'none_Bx': 0, 'Bx_call': 0, 'none_reading': 0, 'will_call': 0,
                'today_g_egd': today_g_egd, 'today_j_egd': today_j_egd,
                'today_g_colon': today_g_colon, 'today_j_colon': today_j_colon, 'today_sig': 0,
                'today_total_egd': 0, 'today_total_colon': 0,
@@ -1089,19 +1089,19 @@ def home(request):
                'first_adenoma_rate': first_adenoma_rate, 'second_adenoma_rate': second_adenoma_rate,
                'total_polyp_rate': total_polyp_rate, 'total_adenoma_rate': total_adenoma_rate}
 
-    for endoscopy in all_endoscopy:
-        if endoscopy.procedure in [['EMR'], ['Polypectomy'], ['Bx'], ['Bx', 'EMR'], ['Bx', 'Polypectomy'],
-                                      ['EMR', 'Polypectomy'], ['Bx', 'EMR', 'Polypectomy']] \
-                and (endoscopy.Bx_result == '.' or endoscopy.Bx_result==''):
-            none_Bx += 1
-    context['none_Bx'] = none_Bx
+    endoscopy_without_Bx_result = all_endoscopy.filter(
+        Q(procedure__icontains='Bx') | Q(procedure__icontains="Polypectomy") | Q(procedure__icontains="EMR")).distinct()
+    endoscopy_without_Bx_result = endoscopy_without_Bx_result.filter(Q(Bx_result='.') | Q(Bx_result=''))
+    none_Bx = endoscopy_without_Bx_result.count()
+    context['none_Bx']=none_Bx
 
-    for endoscopy in all_endoscopy:
-        if endoscopy.procedure in [['EMR'], ['Polypectomy'], ['Bx'], ['Bx', 'EMR'], ['Bx', 'Polypectomy'],
-                                      ['Polypectomy', 'EMR'], ['Bx', 'Polypectomy', 'EMR'], ['Bx', 'CLO'], ['CLO'],
-                                      ['CLO', 'EMR'], ['CLO', 'Polypectomy', 'EMR']] and endoscopy.Bx_result_call == '.' \
-                and endoscopy.Bx_result !='.' and  endoscopy.date >= date(2017, 2, 27):
-            Bx_call += 1
+    endoscopy_without_Bx_noti = all_endoscopy.filter(Q(date__gte=date(2017, 2, 27)) &
+                                                         (Q(procedure__icontains='Bx') | Q(
+                                                             procedure__icontains="Polypectomy") | Q(
+                                                             procedure__icontains="EMR")) &
+                                                         (Q(Bx_result_call='.') | Q(Bx_result_call='')))
+    endoscopy_without_Bx_noti = endoscopy_without_Bx_noti.exclude(Bx_result='.').exclude(Bx_result='')
+    Bx_call = endoscopy_without_Bx_noti.count()
     context['Bx_call'] = Bx_call
 
     for endoscopy in all_endoscopy:
@@ -1117,9 +1117,9 @@ def home(request):
             else:
                 if endoscopy.re_visit_call == '.':
                     if endoscopy.patient_id not in patient_id_to_call:
-                        will_phone += 1
+                        will_call += 1
                         patient_id_to_call.append(endoscopy.patient_id)
-    context['will_phone'] = will_phone
+    context['will_call'] = will_call
 
     for endoscopy in all_endoscopy:
         if endoscopy.date == today:
@@ -1204,3 +1204,43 @@ def home(request):
         context['total_polyp_rate'], context['total_adenoma_rate'] = '0', '0'
 
     return render(request, 'home2.html', context)
+
+def noti_summary(request):
+    all_endoscopy = Endoscopy.objects.all()
+    today = date.today()
+    noti={}
+    none_Bx, Bx_call, none_reading, will_call = 0,0,0,0
+    if all_endoscopy  is None:
+        all_endoscopy = Endoscopy.objects.all()
+    for endoscopy in all_endoscopy:
+        if endoscopy.procedure in [['EMR'], ['Polypectomy'], ['Bx'], ['Bx', 'EMR'], ['Bx', 'Polypectomy'],
+                                      ['EMR', 'Polypectomy'], ['Bx', 'EMR', 'Polypectomy']] \
+                and (endoscopy.Bx_result == '.' or endoscopy.Bx_result==''):
+            none_Bx += 1
+    noti['none_Bx'] = none_Bx
+
+    for endoscopy in all_endoscopy:
+        if endoscopy.procedure in [['EMR'], ['Polypectomy'], ['Bx'], ['Bx', 'EMR'], ['Bx', 'Polypectomy'],
+                                      ['Polypectomy', 'EMR'], ['Bx', 'Polypectomy', 'EMR'], ['Bx', 'CLO'], ['CLO'],
+                                      ['CLO', 'EMR'], ['CLO', 'Polypectomy', 'EMR']] and endoscopy.Bx_result_call == '.' \
+                and endoscopy.Bx_result !='.' and  endoscopy.date >= date(2017, 2, 27):
+            Bx_call += 1
+    noti['Bx_call'] = Bx_call
+
+    for endoscopy in all_endoscopy:
+        if endoscopy.Dx == '.': none_reading += 1
+    noti['none_reading'] = none_reading
+
+    patient_id_to_call=[]
+    for endoscopy in all_endoscopy:
+        call_date = add_month(endoscopy.date, endoscopy.followup_period)
+        if today.year == call_date.year and today.month == call_date.month:
+            if endoscopy.date.year == today.year and endoscopy.date.month == today.month:
+                continue;
+            else:
+                if endoscopy.re_visit_call == '.':
+                    if endoscopy.patient_id not in patient_id_to_call:
+                        will_call += 1
+                        patient_id_to_call.append(endoscopy.patient_id)
+    noti['will_call'] = will_call
+    return HttpResponse(json.dumps(noti), content_type="application/json")

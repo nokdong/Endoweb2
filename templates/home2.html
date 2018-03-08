@@ -139,10 +139,10 @@
     <div id="noti_summary">
         <table>
             <tr align="left">
-                <th>조직검사 미입력: {{none_Bx}}</th><th>조직검사 통보: {{Bx_call}}</th>
+                <th>조직검사 미입력: <span id = "none_Bx">{{none_Bx}}</span></th><th>조직검사 통보: {{Bx_call}}</th>
             </tr>
             <tr align="left">
-                <th>판독미입력: {{none_reading}}</th><th>재방문통보: {{will_phone}}</th>
+                <th>판독미입력: {{none_reading}}</th><th>재방문통보: {{will_call}}</th>
             </tr>
         </table>
     </div>
@@ -288,6 +288,16 @@
             }); // ajax 끝
         }; //bxNoti 함수 종료
 
+        function noti_summary() {
+            $.ajax({
+                url : "{% url 'procedure:noti_summary' %}",
+                dataType : 'json',
+                success : function(response) {
+                    $('#none_Bx').val(response.none_Bx)
+                }, // success 끝
+            }); //ajax 끝
+        }; // noti_summary 함수 끝
+
         function bxInput() {
             $('#hidden').val('bxInput');
             $.ajax({
@@ -311,29 +321,29 @@
         }; //bxInput 함수 종료
 
         function reload(examDate) {
-            setTimeout(function() {
-                eachDayClick(examDate);
-                headerChange();
-                document.getElementById('graph').contentDocument.location.reload(true);}, 3000);
-        };
-
-        function reloadBx() {
             $token = $('#hidden').val()
-            if ($token == 'bxInput') {
+            if (typeof(examDate) === 'string') {
                 setTimeout(function() {
-                    bxInput();}, 3000);
-            } else if ($token == 'bxNoti') {
-                setTimeout(function() {
-                    bxNoti();}, 3000);
+                    eachDayClick(examDate);
+                    headerChange();
+                    document.getElementById('graph').contentDocument.location.reload(true);}, 3000);
+            } else {
+                if ($token == 'bxInput') {
+                    setTimeout(function() {
+                        bxInput();
+                        noti_summary();}, 3000);
+                } else if ($token == 'bxNoti') {
+                    setTimeout(function() {
+                        bxNoti();}, 3000);
+                 } else if ($token == 'eachDay') {
+                    setTimeout (function() {
+                        eachDayClick(examDate);}, 3000);
+                 };
             };
         };
 
-        function reloadBxNoti() {
-            setTimeout(function() {
-                bxNoti();}, 3000);
-        };
-
         function eachDayClick(examDate) {
+            $('#hidden').val('eachDay');
             if (typeof(examDate) === 'object') {
                 var time = this.querySelector('time');
                 formalTime = new Date (time.getAttribute('datetime'));
@@ -369,7 +379,6 @@
         function patientInfo() {
             var patient_id = this.id;
             var token = $('#hidden').val();
-            console.log(token);
             $.ajax({
                 type : "POST",
                 url : "{% url 'procedure:each_day_patient_info' %}",
@@ -381,6 +390,8 @@
                 },
             }); //ajax 끝
         }; // 환자 이름 클릭 인지 끝
+
+
 </script>
 </body>
 </html>
