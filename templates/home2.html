@@ -246,6 +246,7 @@
         }; //  nextarrow click 인지 끝
 
         function readingInput() {
+            $('#hidden').val('readingInput');
             $.ajax({
                 url : "{% url 'procedure:reading_input_for_ajax' %}",
                 dataType: 'json',
@@ -322,12 +323,6 @@
 
         function reload(examDate) {
             $token = $('#hidden').val()
-            if (typeof(examDate) === 'string') {
-                setTimeout(function() {
-                    eachDayClick(examDate);
-                    headerChange();
-                    document.getElementById('graph').contentDocument.location.reload(true);}, 3000);
-            } else {
                 if ($token == 'bxInput') {
                     setTimeout(function() {
                         bxInput();
@@ -337,9 +332,13 @@
                         bxNoti();}, 3000);
                  } else if ($token == 'eachDay') {
                     setTimeout (function() {
-                        eachDayClick(examDate);}, 3000);
+                        eachDayClick(examDate);
+                        headerChange();
+                        document.getElementById('graph').contentDocument.location.reload(true);}, 3000);
+                 } else if ($token =='readingInput') {
+                    setTimeout(function() {
+                        readingInput();}, 3000);
                  };
-            };
         };
 
         function eachDayClick(examDate) {

@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3939ec73-7277-4427-be86-e0d480cb990a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Endoweb v2.iml" afterPath="$PROJECT_DIR$/.idea/Endoweb v2.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" afterPath="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" />
       <change beforePath="$PROJECT_DIR$/procedure/templates/procedure/vbar.html" afterPath="$PROJECT_DIR$/procedure/templates/procedure/vbar.html" />
-      <change beforePath="$PROJECT_DIR$/procedure/urls.py" afterPath="$PROJECT_DIR$/procedure/urls.py" />
-      <change beforePath="$PROJECT_DIR$/procedure/views.py" afterPath="$PROJECT_DIR$/procedure/views.py" />
       <change beforePath="$PROJECT_DIR$/templates/home2.html" afterPath="$PROJECT_DIR$/templates/home2.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/procedure/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="1110" column="25" lean-forward="true" selection-start-line="1110" selection-start-column="25" selection-end-line="1110" selection-end-column="25" />
+            <state relative-caret-position="356">
+              <caret line="1117" column="50" lean-forward="false" selection-start-line="1117" selection-start-column="50" selection-end-line="1117" selection-end-column="50" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -42,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home2.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home2.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/home2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1545">
-              <caret line="195" column="46" lean-forward="true" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+            <state relative-caret-position="514">
+              <caret line="339" column="48" lean-forward="false" selection-start-line="339" selection-start-column="48" selection-end-line="339" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -185,12 +179,12 @@
         <option value="$PROJECT_DIR$/procedure/templates/procedure/existing_patient_adding_endoscopy.html" />
         <option value="$PROJECT_DIR$/procedure/templates/procedure/endoscopy_info_update.html" />
         <option value="$PROJECT_DIR$/procedure/urls.py" />
-        <option value="$PROJECT_DIR$/templates/home2.html" />
         <option value="$PROJECT_DIR$/procedure/views.py" />
+        <option value="$PROJECT_DIR$/templates/home2.html" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-4" />
     <option name="y" value="-4" />
     <option name="width" value="1288" />
@@ -450,7 +444,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1453125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -711,21 +705,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1545">
-          <caret line="195" column="46" lean-forward="true" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/procedure/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="1110" column="25" lean-forward="true" selection-start-line="1110" selection-start-column="25" selection-end-line="1110" selection-end-column="25" />
+        <state relative-caret-position="356">
+          <caret line="1117" column="50" lean-forward="false" selection-start-line="1117" selection-start-column="50" selection-end-line="1117" selection-end-column="50" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/home2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="339" column="48" lean-forward="false" selection-start-line="339" selection-start-column="48" selection-end-line="339" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
