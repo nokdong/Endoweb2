@@ -28,30 +28,6 @@ class HomeView(TemplateView):
     template_name = "home2.html"
 
 
-# class ExamModelForm(LoginRequiredMixin, forms.ModelForm):
-#     class Meta:
-#         model = Exam
-#         fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#                   'patient_sex', 'patient_birth',
-#                   'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'follow_up']
-#         widgets = {'exam_type': forms.CheckboxSelectMultiple}
-#         widgets = {'exam_procedure': forms.CheckboxSelectMultiple}
-#
-#
-# class ExamCreateView(LoginRequiredMixin, CreateView):
-#     form_class = ExamModelForm
-#     model = Exam
-#     success_url = reverse_lazy("procedure:add")
-#
-#     def form_valid(self, form):
-#         return super(ExamCreateView, self).form_valid(form)
-#
-# '''
-# def post_update_search(request):
-#     template_name = 'procedure/post_search.html'
-#     return render(request, template_name, request_token)
-# '''
-
 # 환자 입력 클래스. 존재하는 환자와 처음 입력하는 환자를 구분해서 진행된다.
 class AddingPatient(LoginRequiredMixin, FormView):
     form_class = AddingPatientInitalForm
@@ -107,7 +83,6 @@ class SearchView(LoginRequiredMixin, FormView):
     template_name = 'procedure/post_search.html'
 
     def form_valid(self, form):
-        #global request_token
         first_date = '%s' % self.request.POST['first_date']
         last_date = '%s' % self.request.POST['last_date']
         name = '%s' % self.request.POST['name']
@@ -115,6 +90,7 @@ class SearchView(LoginRequiredMixin, FormView):
         exam_type = self.request.POST['type']
         Dx = '%s' % self.request.POST['Dx']
         procedure = self.request.POST.getlist('procedure')
+        print (procedure)
         Bx_result = '%s' % self.request.POST['Bx_result']
 
         context = {}
@@ -139,7 +115,10 @@ class SearchView(LoginRequiredMixin, FormView):
             else :
                 endoscopy_list = Endoscopy.objects.all()
             if exam_type != 'all':
-                endoscopy_list = endoscopy_list.filter(type__exact = list(exam_type))
+                if endoscopy_list.exists():
+                    endoscopy_list = endoscopy_list.filter(type__exact = list(exam_type))
+                else :
+                    endoscopy_list = Endoscopy.objects.filter(type__exact = list(exam_type))
                 searched_list.append('검사종류')
                 searched_list_forloop.append('type')
             if Dx != '':
@@ -147,18 +126,15 @@ class SearchView(LoginRequiredMixin, FormView):
                 searched_list.append('내시경진단')
                 searched_list_forloop.append('Dx')
             if procedure !=[]:
-                for each_exam in endoscopy_list:
-                    common = set(each_exam.procedure).intersection(set(procedure))
-                    if len(common) == 0:
-                        endoscopy_list = endoscopy_list.exclude(id = each_exam.id)
+                endoscopy_list = endoscopy_list.filter(procedure__exact=procedure)
                 searched_list.append('시술')
                 searched_list_forloop.append('procedure')
             if Bx_result != '':
                 endoscopy_list = endoscopy_list.filter(Bx_result__contains=Bx_result)
                 searched_list.append('조직소견')
                 searched_list_forloop.append('Bx_result')
-            num = len(endoscopy_list)
-            for endo in endoscopy_list:
+            #num = len(endoscopy_list)
+            for endo in endoscopy_list.iterator():
                 patient = Patient.objects.get(id = endo.patient_id)
                 patient_list[patient.name] = collections.OrderedDict()
                 patient_list[patient.name]['hospital_no']=patient.hospital_no
@@ -177,7 +153,7 @@ class SearchView(LoginRequiredMixin, FormView):
         else :
             if name !='':
                 finded_patient_list = Patient.objects.filter(Q(name__icontains = name))
-                for patient in finded_patient_list:
+                for patient in finded_patient_list.iterator():
                     patient_list[patient.name]=collections.OrderedDict()
                     patient_list[patient.name]['hospital_no'] = patient.hospital_no
                     patient_list[patient.name]['sex'] = patient.sex
@@ -185,7 +161,7 @@ class SearchView(LoginRequiredMixin, FormView):
                     patient_list[patient.name]['id'] = patient.id
             if hospital_no !='':
                 finded_patient_list = Patient.objects.filter(Q(hospital_no__icontains = hospital_no))
-                for patient in finded_patient_list:
+                for patient in finded_patient_list.iterator():
                     patient_list[patient.name]=collections.OrderedDict()
                     patient_list[patient.name]['hospital_no'] = patient.hospital_no
                     patient_list[patient.name]['sex'] = patient.sex
@@ -200,87 +176,6 @@ class SearchView(LoginRequiredMixin, FormView):
         return render(self.request, self.template_name, context)
 
 
-# class BxUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     template_name = 'procedure/Bx_update.html'
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result',
-#               'Bx_result_call', 'follow_up']
-#     success_url = reverse_lazy('procedure:biopsy')
-#
-#
-# class BxCallUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     template_name = 'procedure/Bx_update.html'
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result',
-#               'Bx_result_call', 'follow_up']
-#     success_url = reverse_lazy('procedure:Bx_call')
-
-
-# class SearchUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result',
-#               'Bx_result_call', 'follow_up',
-#               'phone_check', 're_visit']
-#     template_name = 'procedure/post_search_update.html'
-#     success_url = reverse_lazy('procedure:post_update_search')
-#
-#
-# class TodayUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'follow_up']
-#     success_url = reverse_lazy('procedure:today')
-#
-#
-# class MonthUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'follow_up']
-#     success_url = reverse_lazy('procedure:thismonth')
-#
-#
-# class BxListView(LoginRequiredMixin, ListView):
-#     template_name = 'procedure/Bx_list.html'
-#     context_object_name = 'object_list'
-#
-#     def get_queryset(self):
-#         result = Exam.objects.filter(Q(exam_procedure__icontains='Bx') |
-#                                      Q(exam_procedure__icontains='Polypectomy') |
-#                                      Q(exam_procedure__icontains='EMR')).distinct()
-#         return result
-#
-#
-# class BxCallView(LoginRequiredMixin, ListView):
-#     template_name = 'procedure/Bx_call.html'
-#     context_object_name = 'object_list'
-#
-#     def get_queryset(self):
-#         result = Exam.objects.filter(Q(exam_date__gte=date(2017, 2, 27)) &
-#                                      (Q(exam_procedure__icontains='Bx') |
-#                                       Q(exam_procedure__icontains='Polypectomy') |
-#                                       Q(exam_procedure__icontains='EMR'))).distinct()
-#         return result
-#
-
-# class ReadingUpdateview(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'follow_up']
-#     success_url = reverse_lazy('procedure:readinglist')
-#
-#
-# class ReadingListView(LoginRequiredMixin, ListView):
-#     template_name = 'procedure/reading_list.html'
-#     context_object_name = 'object_list'
-#
-#     def get_queryset(self):
-#         result = Exam.objects.filter(exam_Dx='.')
-#         return result
-
-
 def add_month(date, months):
     month = date.month + int(months) - 1
     year = int(date.year + (month / 12))
@@ -293,63 +188,71 @@ def add_month(date, months):
 @login_required
 def phone(request):
     today = date.today()
-    all_endoscopy = Endoscopy.objects.all()
+    all_endoscopy = Endoscopy.objects.filter(followup_date__year = today.year, followup_date__month = today.month).exclude(followup_period = 0)
+    print (len(all_endoscopy))
 
     context = {}
     will_call_list={}
     called_list={}
     visited_list ={}
-    for endoscopy in all_endoscopy:
-        patient_id = endoscopy.patient_id
-        patient = Patient.objects.get(id = patient_id)
+
+    will_call_endo = all_endoscopy.filter(re_visit_call = '.')
+    for endoscopy in will_call_endo:
         patient_info = collections.OrderedDict()
-        call_date = add_month(endoscopy.date, endoscopy.followup_period)
-        if today.year == call_date.year and today.month == call_date.month:
-            if endoscopy.date.year == today.year and endoscopy.date.month == today.month:
-                continue;
-            else:
-                if endoscopy.re_visit_call == '.':
-                    patient_info['name'] = patient.name
-                    patient_info['sex']=patient.sex
-                    patient_info['hospital_no'] = patient.hospital_no
-                    patient_info['birth']=patient.birth
-                    patient_info['age']=age(patient.birth)
-                    patient_info['phone']=patient.phone
-                    patient_info['date']=endoscopy.date
-                    patient_info['endo_type']=','.join([each[0] for each in endoscopy.type])
-                    patient_info['doc']=endoscopy.doc
-                    patient_info['Dx']=endoscopy.Dx
-                    patient_info['Bx_result']=endoscopy.Bx_result
-                    will_call_list[patient_id]=patient_info
-                elif endoscopy.re_visit_call != '.':
-                    if endoscopy.re_visit == True:
-                        patient_info['name'] = patient.name
-                        patient_info['sex'] = patient.sex
-                        patient_info['hospital_no'] = patient.hospital_no
-                        patient_info['birth'] = patient.birth
-                        patient_info['age'] = age(patient.birth)
-                        patient_info['phone'] = patient.phone
-                        patient_info['date'] = endoscopy.date
-                        patient_info['endo_type'] = ','.join([each[0] for each in endoscopy.type])
-                        patient_info['doc'] = endoscopy.doc
-                        patient_info['Dx'] = endoscopy.Dx
-                        patient_info['Bx_result'] = endoscopy.Bx_result
-                        patient_info['dialog']=endoscopy.re_visit_call
-                        visited_list[patient_id]=patient_info
-                    else:
-                        patient_info['name'] = patient.name
-                        patient_info['sex'] = patient.sex
-                        patient_info['hospital_no'] = patient.hospital_no
-                        patient_info['birth'] = patient.birth
-                        patient_info['age'] = age(patient.birth)
-                        patient_info['phone'] = patient.phone
-                        patient_info['date'] = endoscopy.date
-                        patient_info['endo_type'] = ','.join([each[0] for each in endoscopy.type])
-                        patient_info['doc'] = endoscopy.doc
-                        patient_info['Dx'] = endoscopy.Dx
-                        patient_info['Bx_result'] = endoscopy.Bx_result
-                        patient_info['dialog'] = endoscopy.re_visit_call
-                        called_list[patient_id]=patient_info
+        patient_id = endoscopy.patient_id
+        patient = Patient.objects.get(id=patient_id)
+        patient_info['name'] = patient.name
+        patient_info['sex'] = patient.sex
+        patient_info['hospital_no'] = patient.hospital_no
+        patient_info['birth'] = patient.birth
+        patient_info['age'] = age(patient.birth)
+        patient_info['phone'] = patient.phone
+        patient_info['date'] = endoscopy.date
+        patient_info['endo_type'] = ','.join([each[0] for each in endoscopy.type])
+        patient_info['doc'] = endoscopy.doc
+        patient_info['Dx'] = endoscopy.Dx
+        patient_info['Bx_result'] = endoscopy.Bx_result
+        will_call_list[patient_id] = patient_info
+
+    visited_endo = all_endoscopy.exclude(re_visit_call = '.').filter(re_visit = True)
+    for endoscopy in visited_endo:
+        patient_info = collections.OrderedDict()
+        patient_id = endoscopy.patient_id
+        patient = Patient.objects.get(id=patient_id)
+        patient_info['name'] = patient.name
+        patient_info['sex'] = patient.sex
+        patient_info['hospital_no'] = patient.hospital_no
+        patient_info['birth'] = patient.birth
+        patient_info['age'] = age(patient.birth)
+        patient_info['phone'] = patient.phone
+        patient_info['date'] = endoscopy.date
+        patient_info['endo_type'] = ','.join([each[0] for each in endoscopy.type])
+        patient_info['doc'] = endoscopy.doc
+        patient_info['Dx'] = endoscopy.Dx
+        patient_info['Bx_result'] = endoscopy.Bx_result
+        patient_info['dialog'] = endoscopy.re_visit_call
+        visited_list[patient_id] = patient_info
+
+    not_visited_endo = all_endoscopy.exclude(re_visit_call = '.').filter(re_visit = False)
+    for endoscopy in not_visited_endo:
+        patient_info = collections.OrderedDict()
+        patient_id = endoscopy.patient_id
+        patient = Patient.objects.get(id=patient_id)
+        patient_info['name'] = patient.name
+        patient_info['sex'] = patient.sex
+        patient_info['hospital_no'] = patient.hospital_no
+        patient_info['birth'] = patient.birth
+        patient_info['age'] = age(patient.birth)
+        patient_info['phone'] = patient.phone
+        patient_info['date'] = endoscopy.date
+        patient_info['endo_type'] = ','.join([each[0] for each in endoscopy.type])
+        patient_info['doc'] = endoscopy.doc
+        patient_info['Dx'] = endoscopy.Dx
+        patient_info['Bx_result'] = endoscopy.Bx_result
+        patient_info['dialog'] = endoscopy.re_visit_call
+        called_list[patient_id] = patient_info
+
+
     will_call_list = OrderedDict(sorted(will_call_list.items(), key= lambda x: x[1]['date'], reverse=True))
     called_list = OrderedDict(sorted(called_list.items(), key=lambda x: x[1]['date'], reverse=True))
     visited_list = OrderedDict(sorted(visited_list.items(), key=lambda x: x[1]['date'], reverse=True))
@@ -368,24 +271,6 @@ def phone(request):
         context['visited_fraction'] = round(float(context['visited_number']) / context['total_number'] * 100)
 
     return render(request, 'procedure/phone_list.html', context)
-
-
-# class PhoneCheck(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     template_name = 'procedure/phone_check.html'
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'phone_check',
-#               'follow_up']
-#     success_url = reverse_lazy('procedure:phone')
-#
-#
-# class ReVisit(LoginRequiredMixin, UpdateView):
-#     model = Exam
-#     template_name = 'procedure/re_visit.html'
-#     fields = ['exam_date', 'exam_type', 'exam_doc', 'exam_class', 'exam_place', 'patient_name', 'hospital_no',
-#               'patient_sex', 'patient_birth', 'patient_phone', 'exam_Dx', 'exam_procedure', 'Bx_result', 'phone_check',
-#               're_visit']
-#     success_url = reverse_lazy('procedure:phone')
 
 
 @login_required
@@ -426,77 +311,6 @@ def today(request):
     context['total_colon'] = g_colon + j_colon
     context['sig'] = sig
     return render(request, 'procedure/today_list.html', context)
-
-#
-# @login_required
-# def thismonth(request):
-#     g_egd = 0  # 건진위내시경
-#     j_egd = 0  # 진료위내시경
-#     g_colon = 0  # 건진대장내시경
-#     j_colon = 0  # 진료대장내시경
-#     sig = 0
-#     first_colon = 0
-#     second_colon = 0
-#     first_polyp = 0
-#     second_polyp = 0
-#     first_adenoma = 0
-#     second_adenoma = 0
-#     today = date.today()
-#     this_month = today.month
-#     this_year = today.year
-#
-#     monthly_data = Exam.objects.filter(exam_date__year=this_year).filter(exam_date__month=this_month)
-#     g_egd = monthly_data.filter(exam_type__contains='E').filter(exam_class__contains="건진").count()
-#     j_egd = monthly_data.filter(exam_type__contains='E').filter(exam_class__contains="진료").exclude(
-#         exam_class="건진+진료").count()
-#     g_colon = monthly_data.filter(exam_type__contains='C').filter(exam_class__contains="건진").exclude(
-#         exam_class="건진+진료").count()
-#     j_colon = monthly_data.filter(exam_type__contains='C').filter(exam_class__contains="진료").count()
-#     sig = monthly_data.filter(exam_type__contains='S').count()
-#     first_colon = monthly_data.filter(exam_doc='이영재').filter(exam_type__contains='C').count()
-#     second_colon = monthly_data.filter(exam_doc='김신일').filter(exam_type__contains='C').count()
-#     first_polyp = monthly_data.filter(exam_doc='이영재').filter(exam_type__contains='C').filter(
-#         exam_Dx__contains='polyp').count()
-#     second_polyp = monthly_data.filter(exam_doc='김신일').filter(exam_type__contains='C').filter(
-#         exam_Dx__contains='polyp').count()
-#     first_adenoma = monthly_data.filter(exam_doc='이영재').filter(exam_type__contains='C').filter(
-#         Bx_result__contains='adenoma').count()
-#     second_adenoma = monthly_data.filter(exam_doc='김신일').filter(exam_type__contains='C').filter(
-#         Bx_result__contains='adenoma').count()
-#
-#     context = {'object_list': [], 'g_egd': 0, 'j_egd': 0, 'total_egd': 0, 'g_colon': 0, 'j_colon': 0, 'total_colon': 0,
-#                'sig': 0, 'first_colon': 0,
-#                'first_polyp_rate': 0, 'first_adr': 0, 'second_colon': 0, 'second_polyp_rate': 0, 'second_adr': 0,
-#                'total_polyp_rate': 0, 'total_adenoma_rate': 0}
-#
-#     context['object_list'] = monthly_data
-#     context['g_egd'] = g_egd
-#     context['j_egd'] = j_egd
-#     context['total_egd'] = g_egd + j_egd
-#     context['g_colon'] = g_colon
-#     context['j_colon'] = j_colon
-#     context['total_colon'] = g_colon + j_colon
-#     context['sig'] = sig
-#     context['first_colon'] = first_colon
-#     context['second_colon'] = second_colon
-#     if first_colon != 0:
-#         context['first_polyp_rate'] = int(float(first_polyp) / first_colon * 100)
-#         context['first_adr'] = int(float(first_adenoma) / first_colon * 100)
-#     else:
-#         context['first_polyp_rate'] = '0'
-#     if second_colon != 0:
-#         context['second_polyp_rate'] = int(float(second_polyp) / second_colon * 100)
-#         context['second_adr'] = int(float(second_adenoma) / second_colon * 100)
-#     else:
-#         context['second_polyp_rate'] = '0'
-#
-#     if context['total_colon'] != 0:
-#         context['total_polyp_rate'] = int(float(first_polyp + second_polyp) / context['total_colon'] * 100)
-#         context['total_adenoma_rate'] = int(float(first_adenoma + second_adenoma) / context['total_colon'] * 100)
-#     else:
-#         context['total_polyp_rate'], context['total_adenoma_rate'] = '0', '0'
-#
-#     return render(request, 'procedure/this_month_list.html', context)
 
 
 @login_required
@@ -944,14 +758,6 @@ def year_data(year):
                     monthly_colon[month] += 1
 
     return list(monthly_egd.values()), list(monthly_colon.values())
-#
-#
-# def graph(request):
-#     data = year_data()
-#     data_source = SimpleDataSource(data=data)
-#     chart = ColumnChart(data_source, options={'title': "올해 내시경 추이"})
-#     context = {'chart': chart}
-#     return render(request, 'procedure/year_graph.html', context)
 
 
 @login_required

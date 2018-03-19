@@ -53,6 +53,7 @@ $(document).ready(function() {
             </tr>
             <tr>
                 <th>추적검사</th><td>{{endoscopy_form.followup_period}}</td>
+                <input type="hidden" name="followup_date" id="hidden" value="">
                 <td style = "background-color:white" colspan="2"><input type="submit" id = "button" value="입력" /></td>
             </tr>
         </table>
@@ -63,15 +64,30 @@ $(document).ready(function() {
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('change', '#id_Dx', autoInputFollowup);
+        $(document).on('click','#button', followupDateCal);
         $("#id_type, #id_procedure").css({
             "list-style-type": "none",
             "display": "inline-block",
             "text-align":"left",
             "padding":"0px"
             });
+
+        function followupDateCal() {
+            var examDate = document.getElementById("id_date").value;
+            var arr = examDate.split('-');
+            var currentDate = new Date(arr[0], arr[1]-1, arr[2]);
+            var followupPeriod = document.getElementById("id_followup_period").value;
+            var followupDate = new Date(currentDate.setMonth(currentDate.getMonth()+Number(followupPeriod)));
+            var year = followupDate.getFullYear();
+            var month = followupDate.getMonth()+1;
+            var date = followupDate.getDate();
+            finalDate = year + '-' + month + '-' + date;
+            $('#hidden').val(finalDate);
+        }
+
         function autoInputFollowup() {
-            twoFour = "CSG Atrophic gastritis Erythematous gastritis colon polyp colon polyps";
-            twelve = "erosive gastritis erosion gastritis Gastric polyps  gastric polyps";
+            twoFour = "CSG Atrophic Erythematous colon polyp colon polyps";
+            twelve = "erosive  erosion  Gastric polyps  gastric polyps";
             two = "ulcer";
             var Dx = document.getElementById("id_Dx").value;
             if (twoFour.includes(Dx)) {

@@ -29,7 +29,7 @@ class AddingPatientInitalForm(forms.Form):
 class EndoscopyModelForm(forms.ModelForm):
     class Meta:
         model = Endoscopy
-        fields = ('date', 'type','doc','source', 'place', 'sleep', 'Dx','procedure','followup_period',)
+        fields = ('date', 'type','doc','source', 'place', 'sleep', 'Dx','procedure','followup_period','followup_date')
         #widgets = forms.SelectMultiple(attrs={'display':'inline-block'})
 
 
