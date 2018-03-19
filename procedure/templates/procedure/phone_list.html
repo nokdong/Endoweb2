@@ -73,7 +73,7 @@
         </tr>
     {% for id, info in called_list.items %}
     <tr>
-        <td><a href="{% url 'procedure:re_visit_patient_info' id %}"><font color="blue">{{ info.name }}</font></a>({{info.sex}})</td>
+        <td><a href="{% url 'procedure:re_visit_patient_info' id %}" onclick="window.open(this.href,'', 'width=600, height=700');return(false);"><font color="blue">{{ info.name }}</font></a>({{info.sex}})</td>
         <td>{{ info.hospital_no}}</td>
         <td>{{ info.age}}({{ info.birth |  date:"y, m.d"}})</td>
         <td>{{ info.phone }}</td>
@@ -103,7 +103,7 @@
         </tr>
     {% for id, info in visited_list.items %}
     <tr>
-        <td><a href="{% url 'procedure:re_visit_patient_info' id %}"><font color="blue">{{ info.name }}</font></a>({{ info.sex }})</td>
+        <td><a href="{% url 'procedure:re_visit_patient_info' id %}" onclick="window.open(this.href,'', 'width=600, height=700');return(false);"><font color="blue">{{ info.name }}</font></a>({{ info.sex }})</td>
         <td>{{ info.hospital_no}}</td>
         <td>{{ info.age}}({{ info.birth |  date:"y, m.d"}})</td>
         <td>{{ info.phone }}</td>
