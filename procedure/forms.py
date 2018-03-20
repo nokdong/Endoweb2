@@ -32,6 +32,10 @@ class EndoscopyModelForm(forms.ModelForm):
         fields = ('date', 'type','doc','source', 'place', 'sleep', 'Dx','procedure','followup_period','followup_date')
         #widgets = forms.SelectMultiple(attrs={'display':'inline-block'})
 
+class EndoscopyFullForm(forms.Form):
+    class Meta:
+        model = Endoscopy
+        fields = ('date', 'type','doc','source', 'place', 'sleep', 'Dx','procedure', 'Bx_result',"Bx_result_call", 'followup_period','followup_date', 're_visit_call', 're_visit', 're_visit_date')
 
 class ProcedureSearchForm(forms.Form):
     name=forms.CharField(label="이름", required=False)

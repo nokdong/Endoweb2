@@ -13,9 +13,10 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404
 
 from endo.views import LoginRequiredMixin
-from procedure.forms import ProcedureSearchForm, AddingPatientInitalForm, PatientModelForm, EndoscopyModelForm
+from procedure.forms import ProcedureSearchForm, AddingPatientInitalForm, PatientModelForm, EndoscopyModelForm, EndoscopyFullForm
 from procedure.models import  Patient, Endoscopy
 from bokeh.plotting import figure, save, output_file, ColumnDataSource
 from bokeh.layouts import column
@@ -63,7 +64,6 @@ def add_endoscopy(request):
         if endoscopy_form.is_valid():
             endoscopy_form.save()
     else:
-        print (request.POST)
         patient_form = PatientModelForm(request.POST)
         if patient_form.is_valid():
             created_patient = patient_form.save()
@@ -392,7 +392,7 @@ class PatientInfoUpdateview(LoginRequiredMixin, UpdateView):
 class EndoscopyInfoUpdateview(LoginRequiredMixin, UpdateView):
     model = Endoscopy
     fields = ['date', 'type', 'doc', 'source', 'place', 'Dx','procedure','Bx_result','Bx_result_call','followup_period',
-              're_visit_call','re_visit','re_visit_date']
+              're_visit_call','re_visit','re_visit_date', 'followup_date']
     template_name = 'procedure/endoscopy_info_update.html'
     def get_success_url(self):
         return reverse('procedure:each_day_patient_info', kwargs={'pk':self.object.patient_id})

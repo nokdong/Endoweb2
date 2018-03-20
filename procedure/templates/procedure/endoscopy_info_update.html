@@ -5,9 +5,11 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="{% static "js/infoUpdate.js" %}"></script>
 
 {% block content %}
 <div id="content">
+
 
 <form action="." method="post"> {% csrf_token %}
     {% if form.errors %}
@@ -44,6 +46,7 @@
         </div>
         <div class="form-row">
             {{form.followup_period.label_tag}}{{form.followup_period}}
+            <input type="hidden" name="followup_date" id="hidden" value="">
         </div>
         <div class="form-row">
             {{form.re_visit_call.label_tag}}{{form.re_visit_call}}
@@ -63,21 +66,3 @@
     </form>
 </div>
 {% endblock %}
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#id_type").css({
-            "list-style-type": "none",
-            "display": "inline-block"
-        });
-    });
-
-    var btn = document.getElementById("button");
-        btn.onclick = function () {
-            var childWindow = window.parent;
-            var parentWindow = childWindow.opener;
-            var examDate = document.getElementById("initial-id_date").value;
-            parentWindow.reload(examDate);
-        };
-
-</script>
