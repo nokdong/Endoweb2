@@ -17,8 +17,8 @@ class PatientAdmin(admin.ModelAdmin):
 admin.site.register(Patient, PatientAdmin)
 
 class EndoscopyAdmin(admin.ModelAdmin):
-    list_display=('date', 'type')
-    list_filter=['date']
-    search_fields=('date','type')
+    list_display=('date', 'type', 'id')
+    list_filter=['date', 'id']
+    search_fields=('date','type', 'id')
 
 admin.site.register(Endoscopy, EndoscopyAdmin)

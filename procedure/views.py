@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from dateutil import relativedelta
 import collections
 import sys
 import json
@@ -59,8 +60,36 @@ class AddingPatient(LoginRequiredMixin, FormView):
 
 def add_endoscopy(request):
     if 'fk' in request.POST:
+        endoscopies_of_patient = Endoscopy.objects.filter(patient_id=request.POST['fk'])
+        today = date.today()
+        for endoscopy in endoscopies_of_patient:
+            endoscopy_date = endoscopy.date
+            followup_date = endoscopy.followup_date
+            followup_month_firstday = date(followup_date.year, followup_date.month, 1)
+            thismonth_firstday = date(today.year, today.month, 1)
+            if followup_month_firstday > thismonth_firstday and endoscopy.type == list(request.POST['type']):
+                endoscopy.followup_date = today
+                endoscopy.re_visit_date = today
+                # endoscopy.followup_period = \
+                #     (relativedelta.relativedelta(date(today.year, today.month, 31), date(endoscopy_date.year, endoscopy_date.month, 1))).months
+                endoscopy.re_visit = True
+                endoscopy.re_visit_call="예정보다 빨리옴"
+                endoscopy.save()
+            elif followup_month_firstday < thismonth_firstday and endoscopy.type == list(request.POST['type']):
+                endoscopy.re_visit_date = today
+                endoscopy.re_visit = True
+                endoscopy.re_visit_call = "예정보다 늦게옴"
+                endoscopy.save()
+            elif followup_month_firstday == thismonth_firstday and endoscopy.type == list(request.POST['type']):
+                endoscopy.re_visit_date = today
+                endoscopy.re_visit = True
+                if endoscopy.re_visit_call=='.':
+                    endoscopy.re_visit_call = '전화 통화 안됐는데 방문함'
+                endoscopy.save()
+
         endoscopy = Endoscopy(patient_id=request.POST['fk'])
         endoscopy_form = EndoscopyModelForm(request.POST, instance=endoscopy)
+
         if endoscopy_form.is_valid():
             endoscopy_form.save()
     else:
@@ -90,7 +119,6 @@ class SearchView(LoginRequiredMixin, FormView):
         exam_type = self.request.POST['type']
         Dx = '%s' % self.request.POST['Dx']
         procedure = self.request.POST.getlist('procedure')
-        print (procedure)
         Bx_result = '%s' % self.request.POST['Bx_result']
 
         context = {}
@@ -189,7 +217,6 @@ def add_month(date, months):
 def phone(request):
     today = date.today()
     all_endoscopy = Endoscopy.objects.filter(followup_date__year = today.year, followup_date__month = today.month).exclude(followup_period = 0)
-    print (len(all_endoscopy))
 
     context = {}
     will_call_list={}
