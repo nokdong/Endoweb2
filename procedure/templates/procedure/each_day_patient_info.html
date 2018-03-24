@@ -60,6 +60,9 @@
             <th>조직소견</th>
             <td colspan="5" id="right-bottom">{{value.Bx_result}}</td>
         </tr>
+        <tr>
+            <th class = 'delete'><a href="{% url 'procedure:endo_delete' value.id %}">삭제</a></th>
+        </tr>
     </table>
     <br>
 {% endfor %}

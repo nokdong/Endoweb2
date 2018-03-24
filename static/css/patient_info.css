@@ -2,6 +2,13 @@ table {
     width: 100%;
     border : 1px;
 }
+.delete {
+    background : #FE2E64;
+    border-radius: 5px;
+}
+.delete:hover {
+    background : #FF0040;
+}
 
 th {
     background-color : #2874A6;
@@ -33,6 +40,7 @@ td {
     background-clip: padding-box;
     border-radius: 0px 0px 5px 0px;
 }
+
 
 input[type=text], input[type=number], select, textarea{
     width: 100%;

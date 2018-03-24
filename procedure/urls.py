@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^each_day_patient_info/(?P<pk>[0-9]+)/$', views.each_day_patient_info, name="each_day_patient_info"),
     url(r'^each_day_patient_info/$', views.each_day_patient_info, name="each_day_patient_info"),
     url(r'^re_visit_patient_info/(?P<pk>[0-9]+)/$', views.re_visit_patient_info, name="re_visit_patient_info"),
+    url(r'^endo_delete/(?P<pk>[0-9]+)/$', views.EndoDeleteView.as_view(), name="endo_delete"),
     url(r'^re_visit_patient_info/$', views.re_visit_patient_info, name="re_visit_patient_info"),
     url(r'^(?P<pk>[0-9]+)/patient_info_update/$', views.PatientInfoUpdateview.as_view(), name="patient_info_update"),
     url(r'^(?P<pk>[0-9]+)/endoscopy_info_update/$', views.EndoscopyInfoUpdateview.as_view(), name="endoscopy_info_update"),

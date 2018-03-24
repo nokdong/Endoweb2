@@ -1,26 +1,24 @@
-from datetime import date, datetime
-from dateutil import relativedelta
+from datetime import date
+#from dateutil import relativedelta
 import collections
 import sys
 import json
 from collections import OrderedDict
 
-from django import forms
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
-from django.shortcuts import render, render_to_response, redirect
-from django.views.generic import CreateView, ListView, UpdateView
+from django.shortcuts import render
+from django.views.generic import UpdateView, DeleteView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404
+
 
 from endo.views import LoginRequiredMixin
 from procedure.forms import ProcedureSearchForm, AddingPatientInitalForm, PatientModelForm, EndoscopyModelForm, EndoscopyFullForm
 from procedure.models import  Patient, Endoscopy
 from bokeh.plotting import figure, save, output_file, ColumnDataSource
-from bokeh.layouts import column
 from bokeh.models.widgets import Panel, Tabs
 from bokeh.models import Legend, HoverTool
 
@@ -62,30 +60,33 @@ def add_endoscopy(request):
     if 'fk' in request.POST:
         endoscopies_of_patient = Endoscopy.objects.filter(patient_id=request.POST['fk'])
         today = date.today()
-        for endoscopy in endoscopies_of_patient:
-            endoscopy_date = endoscopy.date
-            followup_date = endoscopy.followup_date
-            followup_month_firstday = date(followup_date.year, followup_date.month, 1)
-            thismonth_firstday = date(today.year, today.month, 1)
-            if followup_month_firstday > thismonth_firstday and endoscopy.type == list(request.POST['type']):
-                endoscopy.followup_date = today
-                endoscopy.re_visit_date = today
-                # endoscopy.followup_period = \
-                #     (relativedelta.relativedelta(date(today.year, today.month, 31), date(endoscopy_date.year, endoscopy_date.month, 1))).months
-                endoscopy.re_visit = True
-                endoscopy.re_visit_call="예정보다 빨리옴"
-                endoscopy.save()
-            elif followup_month_firstday < thismonth_firstday and endoscopy.type == list(request.POST['type']):
-                endoscopy.re_visit_date = today
-                endoscopy.re_visit = True
-                endoscopy.re_visit_call = "예정보다 늦게옴"
-                endoscopy.save()
-            elif followup_month_firstday == thismonth_firstday and endoscopy.type == list(request.POST['type']):
-                endoscopy.re_visit_date = today
-                endoscopy.re_visit = True
-                if endoscopy.re_visit_call=='.':
-                    endoscopy.re_visit_call = '전화 통화 안됐는데 방문함'
-                endoscopy.save()
+        latest_endoscopy = endoscopies_of_patient.latest('date')
+        #for endoscopy in endoscopies_of_patient:
+        endoscopy_date = latest_endoscopy.date
+        followup_date = latest_endoscopy.followup_date
+        followup_month_firstday = date(followup_date.year, followup_date.month, 1)
+        thismonth_firstday = date(today.year, today.month, 1)
+        if followup_month_firstday > thismonth_firstday and latest_endoscopy.type == list(request.POST['type']):
+            latest_endoscopy.followup_date = today
+            latest_endoscopy.re_visit_date = today
+            # latest_endoscopy.followup_period = \
+            #     (relativedelta.relativedelta(date(today.year, today.month, 31), date(latest_endoscopy_date.year, latest_endoscopy_date.month, 1))).months
+            latest_endoscopy.re_visit = True
+            if latest_endoscopy.re_visit_call == '.':
+                latest_endoscopy.re_visit_call="예정보다 빨리옴"
+            latest_endoscopy.save()
+        elif followup_month_firstday < thismonth_firstday and latest_endoscopy.type == list(request.POST['type']):
+            latest_endoscopy.re_visit_date = today
+            latest_endoscopy.re_visit = True
+            if latest_endoscopy.re_visit_call == '.':
+                latest_endoscopy.re_visit_call = "예정보다 늦게옴"
+            latest_endoscopy.save()
+        elif followup_month_firstday == thismonth_firstday and latest_endoscopy.type == list(request.POST['type']):
+            latest_endoscopy.re_visit_date = today
+            latest_endoscopy.re_visit = True
+            if latest_endoscopy.re_visit_call=='.':
+                latest_endoscopy.re_visit_call = '전화 통화 안됐는데 방문함'
+            latest_endoscopy.save()
 
         endoscopy = Endoscopy(patient_id=request.POST['fk'])
         endoscopy_form = EndoscopyModelForm(request.POST, instance=endoscopy)
@@ -202,7 +203,6 @@ class SearchView(LoginRequiredMixin, FormView):
             context['form'] = form
 
         return render(self.request, self.template_name, context)
-
 
 def add_month(date, months):
     month = date.month + int(months) - 1
@@ -407,6 +407,11 @@ def thismonth_for_ajax(request):
         context['total_polyp_rate'], context['total_adenoma_rate'] = '0', '0'
 
     return HttpResponse(json.dumps(context), content_type="application/json")
+
+class EndoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Endoscopy
+    def get_success_url(self):
+        return reverse('procedure:each_day_patient_info', kwargs={'pk': self.object.patient_id})
 
 class PatientInfoUpdateview(LoginRequiredMixin, UpdateView):
     model = Patient
