@@ -72,19 +72,19 @@ def add_endoscopy(request):
             # latest_endoscopy.followup_period = \
             #     (relativedelta.relativedelta(date(today.year, today.month, 31), date(latest_endoscopy_date.year, latest_endoscopy_date.month, 1))).months
             latest_endoscopy.re_visit = True
-            if latest_endoscopy.re_visit_call == '.':
+            if latest_endoscopy.re_visit_call == '.' or latest_endoscopy.re_visit_call == '':
                 latest_endoscopy.re_visit_call="예정보다 빨리옴"
             latest_endoscopy.save()
         elif followup_month_firstday < thismonth_firstday and latest_endoscopy.type == list(request.POST['type']):
             latest_endoscopy.re_visit_date = today
             latest_endoscopy.re_visit = True
-            if latest_endoscopy.re_visit_call == '.':
+            if latest_endoscopy.re_visit_call == '.' or latest_endoscopy.re_visit_call == '':
                 latest_endoscopy.re_visit_call = "예정보다 늦게옴"
             latest_endoscopy.save()
         elif followup_month_firstday == thismonth_firstday and latest_endoscopy.type == list(request.POST['type']):
             latest_endoscopy.re_visit_date = today
             latest_endoscopy.re_visit = True
-            if latest_endoscopy.re_visit_call=='.':
+            if latest_endoscopy.re_visit_call=='.' or latest_endoscopy.re_visit_call == '':
                 latest_endoscopy.re_visit_call = '전화 통화 안됐는데 방문함'
             latest_endoscopy.save()
 
