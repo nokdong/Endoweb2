@@ -37,5 +37,5 @@ urlpatterns = [
     url(r'^re_visit_patient_info/$', views.re_visit_patient_info, name="re_visit_patient_info"),
     url(r'^(?P<pk>[0-9]+)/patient_info_update/$', views.PatientInfoUpdateview.as_view(), name="patient_info_update"),
     url(r'^(?P<pk>[0-9]+)/endoscopy_info_update/$', views.EndoscopyInfoUpdateview.as_view(), name="endoscopy_info_update"),
-    url(r'^(?P<pk>[0-9]+)/endoscopy_info_update_for_revisit/$', views.EndoscopyInfoUpdateForRevisitview.as_view(), name="endoscopy_info_update_for_revisit"),
+    # url(r'^(?P<pk>[0-9]+)/endoscopy_info_update_for_revisit/$', views.EndoscopyInfoUpdateForRevisitview.as_view(), name="endoscopy_info_update_for_revisit"),
 ]

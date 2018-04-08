@@ -429,13 +429,13 @@ class EndoscopyInfoUpdateview(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('procedure:each_day_patient_info', kwargs={'pk':self.object.patient_id})
 
-class EndoscopyInfoUpdateForRevisitview(LoginRequiredMixin, UpdateView):
-    model = Endoscopy
-    fields = ['date', 'type', 'doc', 'source', 'place', 'Dx','procedure','Bx_result','Bx_result_call','followup_period',
-              're_visit_call','re_visit','re_visit_date']
-    template_name = 'procedure/endoscopy_info_update.html'
-    def get_success_url(self):
-        return reverse('procedure:re_visit_patient_info', kwargs={'pk':self.object.patient_id})
+# class EndoscopyInfoUpdateForRevisitview(LoginRequiredMixin, UpdateView):
+#     model = Endoscopy
+#     fields = ['date', 'type', 'doc', 'source', 'place', 'Dx','procedure','Bx_result','Bx_result_call','followup_period',
+#               're_visit_call','re_visit','re_visit_date']
+#     template_name = 'procedure/endoscopy_info_update.html'
+#     def get_success_url(self):
+#         return reverse('procedure:re_visit_patient_info', kwargs={'pk':self.object.patient_id})
 
 
 def each_day_patient_info(request, pk = None):
